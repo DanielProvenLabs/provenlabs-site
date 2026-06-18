@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daniel Bosack — ProvenLabs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0B1C34;
+      --navy-light: #122542;
+      --blue: #1B6CC8;
+      --blue-light: #2A7FDF;
+      --teal: #1D9E75;
+      --teal-light: #22B585;
+      --amber: #D4860A;
+      --amber-light: #E8960A;
+      --white: #FFFFFF;
+      --off-white: #F8F7F4;
+      --gray-100: #EEF0F3;
+      --gray-400: #9CA3AF;
+      --gray-600: #6B7280;
+      --gray-800: #1F2937;
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(11, 28, 52, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-logo span { color: var(--amber-light); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--white) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--amber-light) !important; color: var(--white) !important; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: var(--white);
+    }
+
+    .btn-amber:hover { background: var(--amber-light); transform: translateY(-1px); }
+
+    .btn-outline-white {
+      background: transparent;
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.4);
+    }
+
+    .btn-outline-white:hover { border-color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.06); transform: translateY(-1px); }
+
+    .btn-outline-navy {
+      background: transparent;
+      color: var(--navy);
+      border: 1.5px solid var(--navy);
+    }
+
+    .btn-outline-navy:hover { background: var(--navy); color: var(--white); transform: translateY(-1px); }
+
+    /* SECTION BASE */
+    section { width: 100%; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* HERO */
+    #hero {
+      background: var(--navy);
+      padding: 160px 2rem 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(27,108,200,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 1.5rem;
+      padding: 6px 14px;
+      border: 1px solid rgba(232,150,10,0.3);
+      border-radius: 99px;
+    }
+
+    #hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 820px;
+      margin: 0 auto 1.5rem;
+    }
+
+    #hero h1 span { color: var(--amber-light); }
+
+    #hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ABOUT */
+    #about {
+      background: var(--off-white);
+      padding: 100px 2rem;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .about-bio {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .about-bio p { margin-bottom: 1.2rem; }
+    .about-bio p:last-child { margin-bottom: 0; }
+
+    .about-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .trust-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .trust-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .trust-icon.blue { background: rgba(27,108,200,0.1); }
+    .trust-icon.teal { background: rgba(29,158,117,0.1); }
+    .trust-icon.amber { background: rgba(212,134,10,0.1); }
+
+    .trust-card h4 { font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 3px; }
+    .trust-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* PHILOSOPHY */
+    #philosophy {
+      background: var(--navy);
+      padding: 100px 2rem;
+      text-align: center;
+    }
+
+    #philosophy .section-tag { color: var(--amber-light); }
+
+    #philosophy .section-heading { color: var(--white); }
+
+    .philosophy-lead {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 680px;
+      margin: 0 auto 4rem;
+      line-height: 1.7;
+    }
+
+    .philosophy-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 4rem;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.75rem 1.25rem;
+      text-align: center;
+    }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber-light);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+
+    .step-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    .philosophy-quote {
+      max-width: 700px;
+      margin: 0 auto;
+      border-left: 3px solid var(--amber);
+      padding: 1.5rem 2rem;
+      text-align: left;
+      background: rgba(255,255,255,0.03);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .philosophy-quote p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      font-style: italic;
+      line-height: 1.7;
+    }
+
+    /* INDUSTRIES */
+    #industries {
+      background: var(--off-white);
+      padding: 100px 2rem;
+    }
+
+    .industries-intro {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .industries-intro p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0.75rem auto 0;
+    }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .industry-card {
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .industry-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-2px); }
+
+    .industry-card-header {
+      padding: 1.75rem 1.75rem 1.25rem;
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    .industry-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 1rem;
+    }
+
+    .industry-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .industry-hook {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .industry-card-body { padding: 1.25rem 1.75rem; }
+
+    .highlight-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .highlight-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--teal);
+    }
+
+    .highlight-list li strong {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .deep-dive-btn {
+      width: 100%;
+      padding: 10px 16px;
+      background: transparent;
+      border: 1.5px solid var(--blue);
+      border-radius: 8px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .deep-dive-btn:hover { background: var(--blue); color: var(--white); }
+
+    .deep-dive-btn svg { transition: transform 0.2s; }
+    .deep-dive-btn.open svg { transform: rotate(180deg); }
+
+    .deep-dive-content {
+      display: none;
+      padding: 1.5rem 1.75rem;
+      border-top: 1px solid var(--gray-100);
+      background: var(--off-white);
+    }
+
+    .deep-dive-content.open { display: block; }
+
+    .deep-dive-content h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .deep-dive-content ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .deep-dive-content ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .deep-dive-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .icp-box {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: var(--white);
+      border: 1px solid var(--gray-100);
+      border-radius: 10px;
+    }
+
+    .icp-box h5 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+
+    .icp-box p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* GO TO MARKET */
+    #gtm {
+      background: var(--white);
+      padding: 100px 2rem;
+    }
+
+    .gtm-intro {
+      max-width: 700px;
+      margin-bottom: 4rem;
+    }
+
+    .gtm-intro p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-top: 1rem;
+    }
+
+    .pain-hooks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .pain-hook-card {
+      border-left: 3px solid var(--teal);
+      padding: 1.25rem 1.5rem;
+      background: var(--off-white);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .pain-hook-card .industry-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+
+    .pain-hook-card p {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* CONTACT */
+    #contact {
+      background: var(--navy);
+      padding: 100px 2rem;
+      text-align: center;
+    }
+
+    #contact .section-tag { color: var(--amber-light); }
+    #contact .section-heading { color: var(--white); }
+
+    #contact p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      margin: 1rem auto 3rem;
+      line-height: 1.7;
+    }
+
+    .contact-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-detail {
+      font-size: 14px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .contact-detail a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .contact-detail a:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer {
+      background: #070F1D;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* CHATBOT */
+    .chat-launcher {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      padding: 0;
+    }
+
+    .chat-launcher-label {
+      background: var(--white);
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      padding: 10px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      border: 1px solid var(--gray-100);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .chat-launcher-label span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 400;
+    }
+
+    .chat-launcher:hover .chat-launcher-label,
+    .chat-launcher.nudge .chat-launcher-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .chat-bubble {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--white);
+      border: none;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chat-launcher:hover .chat-bubble { transform: scale(1.06); box-shadow: 0 6px 30px rgba(0,0,0,0.25); }
+
+    .chat-bubble-dot {
+      position: absolute;
+      bottom: 3px;
+      right: 3px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #22c55e;
+      border: 2.5px solid var(--white);
+      z-index: 2;
+    }
+
+    .chat-panel {
+      position: fixed;
+      bottom: 102px;
+      right: 28px;
+      z-index: 998;
+      width: 360px;
+      max-height: 540px;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.18);
+      border: 1px solid var(--gray-100);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-panel.open { display: flex; }
+
+    .chat-header {
+      background: var(--navy);
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .chat-header-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #E8D5C4;
+      border: 2px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-header-dot {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #22c55e;
+      border: 2px solid var(--navy);
+    }
+
+    .chat-header-info h4 { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+    .chat-header-status { display: flex; align-items: center; gap: 5px; }
+    .chat-header-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; }
+    .chat-header-info p { font-size: 11px; color: rgba(255,255,255,0.55); }
+
+    .chat-intro {
+      background: var(--off-white);
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-100);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .chat-intro-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #E8D5C4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .chat-intro p {
+      font-size: 13px;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-msg-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .chat-msg-row.user { flex-direction: row-reverse; }
+
+    .chat-msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #E8D5C4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .chat-msg {
+      max-width: 78%;
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .chat-msg.bot {
+      background: var(--off-white);
+      color: var(--text-dark);
+      border-radius: 4px 14px 14px 14px;
+    }
+
+    .chat-msg.user {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 14px 4px 14px 14px;
+    }
+
+    .chat-msg a { color: var(--amber); text-decoration: underline; }
+
+    .chat-typing {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .chat-typing-dots {
+      background: var(--off-white);
+      border-radius: 4px 14px 14px 14px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .chat-typing-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gray-400);
+      animation: typingBounce 1.2s infinite;
+    }
+
+    .chat-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    .chat-input-row {
+      padding: 0.875rem;
+      border-top: 1px solid var(--gray-100);
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .chat-input {
+      flex: 1;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 24px;
+      padding: 9px 16px;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      background: var(--off-white);
+    }
+
+    .chat-input:focus { border-color: var(--blue); background: var(--white); }
+
+    .chat-send {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+
+    .chat-send:hover { background: var(--amber-light); transform: scale(1.05); }
+
+    .chat-send:hover { background: var(--amber-light); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .philosophy-steps { grid-template-columns: 1fr 1fr; }
+      .chat-panel { width: calc(100vw - 2rem); right: 1rem; }
+      #hero { padding: 120px 1.5rem 80px; }
+    }
+
+    @media (max-width: 480px) {
+      .philosophy-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Proven<span>Labs</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#philosophy">Philosophy</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#gtm">Approach</a></li>
+    <li><a href="#contact" class="nav-cta">Book a Call</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Daniel Bosack · ProvenLabs</div>
+  <h1>We diagnose before we prescribe. <span>That's the difference.</span></h1>
+  <p>Most consultants show up with a solution already picked out. We don't. We learn your operation first — then we tell you exactly what would help, and what wouldn't.</p>
+  <div class="hero-buttons">
+    <a href="#book-a-call" class="btn btn-amber">Book a Call</a>
+    <a href="mailto:daniel.bosack@provenlabs.ai" class="btn btn-outline-white">Send an Email</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-tag">About Daniel</div>
+        <h2 class="section-heading">A different kind of thinking for a different kind of problem.</h2>
+        <div class="about-bio">
+          <p>I'm Daniel Bosack, a sophomore studying philosophy and interning at ProvenLabs. Most people assume philosophy is abstract and impractical. I've found the opposite — it's the sharpest diagnostic tool in the room.</p>
+          <p>My training is in asking the right questions, challenging assumptions, and thinking clearly under complexity. That's exactly what a business owner needs before investing in new systems or technology.</p>
+          <p>I'm not here to sell you a product. I'm here to understand your operation — what works, what doesn't, and where the real friction lives. Then I bring you findings and a clear path forward.</p>
+          <p>I believe in skills and real experience over credentials, and in honesty over a quick close.</p>
+        </div>
+      </div>
+      <div class="about-trust">
+        <div class="trust-card">
+          <div class="trust-icon blue">
+            <svg width="20" height="20" fill="none" stroke="#1B6CC8" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <h4>Diagnosis first, always</h4>
+            <p>No solution gets recommended before we understand your specific operation. Every business is different.</p>
+          </div>
+        </div>
+        <div class="trust-card">
+          <div class="trust-icon teal">
+            <svg width="20" height="20" fill="none" stroke="#1D9E75" stroke-width="2" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+          <div>
+            <h4>Philosophical precision</h4>
+            <p>Trained to think clearly, ask the right questions, and challenge assumptions — not accept them at face value.</p>
+          </div>
+        </div>
+        <div class="trust-card">
+          <div class="trust-icon amber">
+            <svg width="20" height="20" fill="none" stroke="#D4860A" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          </div>
+          <div>
+            <h4>Honest findings</h4>
+            <p>If there's nothing to fix, we say so. If we can't help, we say that too. You deserve straight answers, not a pitch.</p>
+          </div>
+        </div>
+        <div class="trust-card">
+          <div class="trust-icon blue">
+            <svg width="20" height="20" fill="none" stroke="#1B6CC8" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <h4>Craving the work</h4>
+            <p>I chose ProvenLabs because I believe in experience over a paycheck. I'm diving deep into AI and operations at an early stage — that hunger shows in the work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section id="philosophy">
+  <div class="container">
+    <div class="section-tag">The ProvenLabs Way</div>
+    <h2 class="section-heading">We operate like a doctor.</h2>
+    <p class="philosophy-lead">The first meeting is a diagnosis — we learn what works and what doesn't. Then we go to the drawing board and find the most effective solutions. We come back with our findings, our research, and a clear path to maximizing your operation.</p>
+
+    <div class="philosophy-steps">
+      <div class="step-card">
+        <div class="step-num">Step 01</div>
+        <h3>Diagnose</h3>
+        <p>We sit down and learn your operation. What's working, what isn't, where time and money are slipping through the cracks.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 02</div>
+        <h3>Research</h3>
+        <p>We go to the drawing board. No solutions get proposed until we've done the work to find the right ones for your specific business.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 03</div>
+        <h3>Prescribe</h3>
+        <p>We come back with findings, research, and a clear path forward. Only what makes sense for you — nothing more.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">Step 04</div>
+        <h3>Be honest</h3>
+        <p>If we can't fix something, we say so. If there's nothing to fix, we say that too. Honesty isn't a nicety — it's the whole model.</p>
+      </div>
+    </div>
+
+    <div class="philosophy-quote">
+      <p>"The goal is to make all systems flow seamlessly and eliminate the excess work that builds up and wastes employee time. Not to add complexity — to remove it."</p>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="container">
+    <div class="industries-intro">
+      <div class="section-tag">Industry Research</div>
+      <h2 class="section-heading">Five industries. Deep research. Real answers.</h2>
+      <p>We've done the homework on five specific industries — their pain points, their software landscapes, and exactly where operational improvements create the most value.</p>
+    </div>
+
+    <div class="industry-grid">
+
+      <!-- Real Estate -->
+      <div class="industry-card">
+        <div class="industry-card-header">
+          <div class="industry-icon" style="background: rgba(27,108,200,0.1);">🏠</div>
+          <h3>Real Estate Agencies & Brokerages</h3>
+          <p class="industry-hook">Most brokerages are losing deals they already won — not from bad agents, but from broken follow-up systems.</p>
+        </div>
+        <div class="industry-card-body">
+          <ul class="highlight-list">
+            <li><strong>$241B industry</strong> — the biggest player holds only 9% market share</li>
+            <li><strong>48% of agents</strong> never follow up; 60% of buyers say no 4 times before saying yes</li>
+            <li><strong>Top earners get 70%</strong> of business from referrals and repeat clients — most have no system for it</li>
+            <li>Tech overload is the real problem, not lack of tools</li>
+            <li><strong>240,000+</strong> small independent brokerages underserved and ready</li>
+          </ul>
+          <button class="deep-dive-btn" onclick="toggleDeepDive(this)">
+            Deep Dive
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <div class="deep-dive-content">
+          <h4>Full Research Profile</h4>
+          <ul>
+            <li>Market sizing: $206B in 2025 → $281B by 2031 at 5.32% CAGR. Residential brokerage delivers 82.4% of revenue.</li>
+            <li>The NAR settlement fallout — flat-fee and rebate models accelerating, new disclosure requirements, fair housing updates increasing liability exposure.</li>
+            <li>Software landscape: Follow Up Boss, Wise Agent, Lofty, BoldTrail, CINC. Adoption and simplicity are the real bottleneck, not the existence of software.</li>
+            <li>The lock-in effect — existing home sales near 30-year lows (4.06M transactions in 2025) as homeowners hold sub-4% loans.</li>
+            <li>81% of brokerage firms operate a single office; average firm has just 2 full-time licensees.</li>
+            <li>Broker isolation problem: agents have reported communicating with their broker as few as 10 times in 13 years.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Law Firms -->
+      <div class="industry-card">
+        <div class="industry-card-header">
+          <div class="industry-icon" style="background: rgba(29,158,117,0.1);">⚖️</div>
+          <h3>Law Firms</h3>
+          <p class="industry-hook">The average small firm loses over $100,000 a year in billable time to admin work. That's not a staffing problem — it's a systems problem.</p>
+        </div>
+        <div class="industry-card-body">
+          <ul class="highlight-list">
+            <li><strong>$405B industry</strong> — 77% of legal problems never reach a professional</li>
+            <li><strong>60% of law firms</strong> never answer email inquiries; 27% don't return phone calls</li>
+            <li><strong>78% have CRM software</strong>, only 7% actually use it</li>
+            <li><strong>45% of small firm time</strong> spent on admin — $129,600 in lost revenue per attorney per year</li>
+            <li>Client intake is broken — leads die at first contact through manual back-and-forth and data entry</li>
+            <li><strong>150,000–200,000</strong> small and solo firms underserved and ready</li>
+          </ul>
+          <button class="deep-dive-btn" onclick="toggleDeepDive(this)">
+            Deep Dive
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <div class="deep-dive-content">
+          <h4>Full Research Profile</h4>
+          <ul>
+            <li>Market: $405.3B in 2025, growing at 2.4% CAGR. Small firm segment (2–10 attorneys) holds 34.2% market share, fastest growing at 5.9% CAGR.</li>
+            <li>Software landscape: Clio (used by 150,000+ legal professionals), MyCase, PracticePanther, Lawmatics, Smokeball, Filevine. Adoption is the bottleneck.</li>
+            <li>Billing leakage — firms only collect 89–90% of what they bill, leaving 10% of revenue on the table.</li>
+            <li>AI adoption: 26% of firms integrating generative AI (up from 14% in 2024), but small firms lag due to resource constraints and ethics concerns.</li>
+            <li>Lawyers lose 40% of working time to inefficient manual processes outside the practice of law.</li>
+            <li>The ethics/confidentiality barrier — AI introduction must be trust-first and ethics-aware to win over cautious small firm owners.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Automotive -->
+      <div class="industry-card">
+        <div class="industry-card-header">
+          <div class="industry-icon" style="background: rgba(212,134,10,0.1);">🔧</div>
+          <h3>Automotive Repair Shops & Dealerships</h3>
+          <p class="industry-hook">Two-thirds of Americans don't trust their repair shop. The ones winning right now are the ones who fixed their customer experience first.</p>
+        </div>
+        <div class="industry-card-body">
+          <ul class="highlight-list">
+            <li><strong>$199B market</strong> growing to $281B by 2031 at 5.9% CAGR</li>
+            <li><strong>Two-thirds of Americans</strong> don't trust auto repair shops — a credibility gap hiding an opportunity</li>
+            <li>Most shops have <strong>no structured system</strong> to bring customers back — retention is entirely reactive</li>
+            <li>Job cards lost, invoicing manual, vehicle history on paper — <strong>missed billable work every day</strong></li>
+            <li><strong>115,000+</strong> independent owner-operated shops on legacy tools or nothing at all</li>
+          </ul>
+          <button class="deep-dive-btn" onclick="toggleDeepDive(this)">
+            Deep Dive
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <div class="deep-dive-content">
+          <h4>Full Research Profile</h4>
+          <ul>
+            <li>Market: $199B in 2025, 162,000 establishments. The 50 largest companies generate less than 10% of revenue — majority comes from small independents.</li>
+            <li>Average US vehicle age reached 12.8 years in 2025 — older vehicles drive more frequent repairs and higher ticket sizes.</li>
+            <li>Software landscape: Tekmetric (modern, cloud-based, best for independents), Mitchell 1, RO Writer, Shop-Ware, AutoLeap. Dealerships use CDK Global, Reynolds & Reynolds.</li>
+            <li>Technician shortage: 46% of shop owners say it's significantly impacting operations.</li>
+            <li>Parts pricing pressure: 46% cite finding affordable parts and rising prices as their top challenge.</li>
+            <li>Dealership threat: 16.8% of shops say competing with larger players is getting harder.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Contractors -->
+      <div class="industry-card">
+        <div class="industry-card-header">
+          <div class="industry-icon" style="background: rgba(29,158,117,0.1);">🏗️</div>
+          <h3>Contractors & Construction</h3>
+          <p class="industry-hook">Most contractors are leaving 10–15% of their revenue on the table every year — not from bad work, but from no system to collect it.</p>
+        </div>
+        <div class="industry-card-body">
+          <ul class="highlight-list">
+            <li><strong>$2.2 trillion market</strong> — 3.7 million businesses, the vast majority running lean with no real systems</li>
+            <li>Poor communication causes <strong>52% of rework</strong> — costing the industry $31.3 billion annually</li>
+            <li><strong>70% of contractors</strong> experience payment delays beyond 30 days</li>
+            <li>Only <strong>18% use anything beyond email or spreadsheets</strong></li>
+            <li><strong>600,000+</strong> small owner-operated contractors with everything living in the owner's head</li>
+          </ul>
+          <button class="deep-dive-btn" onclick="toggleDeepDive(this)">
+            Deep Dive
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <div class="deep-dive-content">
+          <h4>Full Research Profile</h4>
+          <ul>
+            <li>Market: $2.2 trillion in 2025, 4.4% of US GDP, 8.3M people employed. Residential construction rebounding 12%; non-residential up 8% in 2025.</li>
+            <li>Software landscape: Procore (enterprise), Buildertrend (residential), JobTread (fastest growing for small contractors at $199/mo), ServiceTitan. Only 18% use apps beyond email or spreadsheets.</li>
+            <li>Labor crisis: industry needs 439,000 new workers in 2025 alone; 62% of firms say candidates lack required skills.</li>
+            <li>73% report that using multiple disconnected tools makes data sharing harder — yet nearly three-quarters plan to increase software spending in 2026.</li>
+            <li>Material cost pressure: construction input prices rose at a 6% annualized rate through mid-2025.</li>
+            <li>Most contractors are tradespeople first, business owners second — software adoption must be frictionless and ROI must be obvious.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Accounting -->
+      <div class="industry-card">
+        <div class="industry-card-header">
+          <div class="industry-icon" style="background: rgba(27,108,200,0.1);">📊</div>
+          <h3>Accounting & Bookkeeping Firms</h3>
+          <p class="industry-hook">The firms growing right now aren't working harder — they cut the admin and went all in on advisory. AI made that possible.</p>
+        </div>
+        <div class="industry-card-body">
+          <ul class="highlight-list">
+            <li><strong>$145.5B industry</strong> — 886,000 firms, most running 8 disconnected apps with none talking to each other</li>
+            <li>Firms can serve <strong>50% more clients</strong> with the same staff when AI automation is in place</li>
+            <li><strong>79% expect AI</strong> to have a high or transformational impact — only 14% have a defined strategy</li>
+            <li><strong>Two-thirds feel overwhelmed</strong> by technology complexity at least weekly</li>
+            <li>No formal marketing, no outbound — growth is entirely word of mouth or it doesn't happen</li>
+          </ul>
+          <button class="deep-dive-btn" onclick="toggleDeepDive(this)">
+            Deep Dive
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+          </button>
+        </div>
+        <div class="deep-dive-content">
+          <h4>Full Research Profile</h4>
+          <ul>
+            <li>Market: $145.5B in 2025. AI accounting market projected to reach $10.87B in 2026, growing at a 44.6% CAGR. SME adoption is the primary driver.</li>
+            <li>Software landscape: QuickBooks (dominant), Xero, FreshBooks, Karbon, Financial Cents, Botkeeper, Dext. On average firms use 8 different apps for core operations.</li>
+            <li>The eight-app problem: 44% cite subscription costs, 41% integration difficulties, 41% time-consuming data entry as major issues.</li>
+            <li>The advisory opportunity: 80% of accountants expect strategic advisory to grow 38% in the next year — but advisory knowledge lives in senior practitioners' heads and can't scale without systems.</li>
+            <li>Talent crisis: aging CPA population retiring, fewer entering the profession, mounting compliance workloads stretching thin teams.</li>
+            <li>AI adoption barriers: privacy/security risk (41%), lack of staff experience (39%), data quality issues (38%).</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GO TO MARKET -->
+<section id="gtm">
+  <div class="container">
+    <div class="gtm-intro">
+      <div class="section-tag">Our Approach</div>
+      <h2 class="section-heading">We don't show up with answers. We show up with questions.</h2>
+      <p>Every engagement starts the same way: we learn your operation before we recommend anything. We've researched five industries in depth so that we come into that first conversation already knowing the common pressure points — but we never assume your business is common.</p>
+    </div>
+
+    <div class="pain-hooks">
+      <div class="pain-hook-card">
+        <div class="industry-name">Real Estate</div>
+        <p>Most brokerages are losing deals they already won — not from bad agents, but from broken follow-up systems.</p>
+      </div>
+      <div class="pain-hook-card">
+        <div class="industry-name">Law Firms</div>
+        <p>The average small firm loses over $100,000 a year in billable time to admin work. That's not a staffing problem — it's a systems problem.</p>
+      </div>
+      <div class="pain-hook-card">
+        <div class="industry-name">Automotive Repair</div>
+        <p>Two-thirds of Americans don't trust their repair shop. The ones winning right now are the ones who fixed their customer experience first.</p>
+      </div>
+      <div class="pain-hook-card">
+        <div class="industry-name">Dealerships</div>
+        <p>The service lane is the most profitable part of your dealership — and most GMs will admit it runs on luck and phone calls.</p>
+      </div>
+      <div class="pain-hook-card">
+        <div class="industry-name">Contractors</div>
+        <p>Most contractors are leaving 10–15% of their revenue on the table every year — not from bad work, but from no system to collect it.</p>
+      </div>
+      <div class="pain-hook-card">
+        <div class="industry-name">Accounting</div>
+        <p>The firms growing right now aren't working harder — they cut the admin and went all in on advisory. AI made that possible.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag">Get in Touch</div>
+    <h2 class="section-heading">Ready to find out what's actually holding your operation back?</h2>
+    <p>The first conversation is free, no-pressure, and no-pitch. Just an honest look at your business and where the real opportunities are.</p>
+    <div class="contact-buttons">
+      <a href="#book-a-call" class="btn btn-amber">Book a Call</a>
+      <a href="mailto:daniel.bosack@provenlabs.ai" class="btn btn-outline-white">Send an Email</a>
+    </div>
+    <div class="contact-detail">
+      Daniel Bosack · <a href="mailto:daniel.bosack@provenlabs.ai">daniel.bosack@provenlabs.ai</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 ProvenLabs · Daniel Bosack · daniel.bosack@provenlabs.ai</p>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chat-launcher" onclick="toggleChat()" aria-label="Chat with Samantha">
+  <span class="chat-launcher-label">Hi there! Questions? I can help.<span>Samantha · Daniel's assistant</span></span>
+  <div class="chat-bubble">
+    <span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,#1B6CC8,#1D9E75);color:white;font-size:26px;font-weight:700;font-family:Inter,sans-serif;border-radius:50%;">S</span>
+    <span class="chat-bubble-dot"></span>
+  </div>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <div class="chat-header-avatar">
+      <span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,#1B6CC8,#1D9E75);color:white;font-size:18px;font-weight:700;font-family:Inter,sans-serif;border-radius:50%;">S</span>
+      <span class="chat-header-dot"></span>
+    </div>
+    <div class="chat-header-info">
+      <h4>Samantha · Daniel's Assistant</h4>
+      <div class="chat-header-status">
+        <span class="chat-header-status-dot"></span>
+        <p>Online now · Replies instantly</p>
+      </div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg-row">
+      <div class="chat-msg-avatar">
+        <span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,#1B6CC8,#1D9E75);color:white;font-size:13px;font-weight:700;font-family:Inter,sans-serif;border-radius:50%;">S</span>
+      </div>
+      <div class="chat-msg bot">Hey! I'm Samantha, Daniel's assistant. I can answer questions about Daniel, ProvenLabs, or our research across real estate, law firms, auto shops, contractors, and accounting. What's on your mind?</div>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" class="chat-input" id="chatInput" placeholder="Message Samantha..." onkeydown="if(event.key==='Enter') sendChat()" />
+    <button class="chat-send" onclick="sendChat()" aria-label="Send">
+      <svg width="16" height="16" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 18-4-7-7-4 18-7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  function toggleDeepDive(btn) {
+    const content = btn.closest('.industry-card-body').nextElementSibling;
+    const isOpen = content.classList.contains('open');
+    content.classList.toggle('open', !isOpen);
+    btn.classList.toggle('open', !isOpen);
+    btn.childNodes[0].textContent = isOpen ? 'Deep Dive' : 'Close';
+  }
+
+  setTimeout(() => {
+    const launcher = document.querySelector('.chat-launcher');
+    launcher.classList.add('nudge');
+    setTimeout(() => launcher.classList.remove('nudge'), 3500);
+  }, 2000);
+
+  function toggleChat() {
+    const panel = document.getElementById('chatPanel');
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) {
+      document.getElementById('chatInput').focus();
+    }
+  }
+
+  const KB = {
+    daniel: "I'm Daniel Bosack, a sophomore studying philosophy and interning at ProvenLabs. My philosophy background gives me a sharp diagnostic lens — I'm trained to think clearly, ask the right questions, and challenge assumptions. I chose ProvenLabs because I believe in real skills and experience over a paycheck.",
+    provenlabs: "ProvenLabs operates like a doctor. The first meeting is always a diagnosis — we learn what works and what doesn't before we ever recommend anything. We go to the drawing board, do the research, and come back with findings and a clear path forward. If we can't fix something, we say so. If there's nothing to fix, we say that too.",
+    philosophy: "ProvenLabs operates like a doctor. Diagnose first, research second, prescribe only what fits. We eliminate excess work that wastes employee time and make all systems flow seamlessly. Honesty is the whole model — no upselling, no solutions picked out in advance.",
+    process: "It starts with a free, no-pressure first conversation. We learn your operation — what's working, what isn't, where time and revenue are slipping. Then we do the research and come back with specific findings and a clear path forward. No pitch, no jargon.",
+    realestate: "The real estate industry has a massive follow-up problem. 48% of agents never make a single follow-up attempt, while 60% of buyers say no four times before saying yes. Top earners get 70% of business from referrals and repeat clients — but most brokerages have no structured system for any of it. The biggest player in a $241B industry holds only 9% market share. The opportunity in small independent brokerages is enormous.",
+    law: "Small law firms are bleeding revenue in plain sight. 60% never answer email inquiries, 27% don't return phone calls, and 45% of attorney time goes to admin — that's over $100,000 in lost billing per attorney per year. 78% have CRM software, but only 7% actually use it. Client intake is broken at most firms, and leads die before anyone even picks up the phone.",
+    automotive: "Two-thirds of Americans don't trust their repair shop — that's an industry-wide credibility crisis that creates a huge opening for shops that get the customer experience right. Most independent shops run on paper, phone calls, and legacy software. Job cards get lost, vehicle history is scattered, and there's no system to bring customers back. It's entirely reactive.",
+    contractor: "Contractors are often leaving 10–15% of their revenue on the table — not from bad work, but from no system to collect it. 70% experience payment delays beyond 30 days. Poor communication causes 52% of rework, costing the industry $31.3 billion annually. Only 18% of construction firms use anything beyond email or spreadsheets. Most owners are tradespeople first and business operators second.",
+    accounting: "Accounting firms are running on an average of 8 disconnected apps with none talking cleanly to each other. Two-thirds of accounting professionals feel overwhelmed by tech complexity at least weekly. The firms growing right now aren't grinding harder — they're using AI to cut admin and move into advisory work. 79% expect AI to have a transformational impact on their industry, but only 14% have any kind of strategy for it.",
+    contact: "You can reach Daniel directly at daniel.bosack@provenlabs.ai, or book a call using the button on this page. The first conversation is free and no-pressure — just an honest look at your operation.",
+    cost: "The first conversation is completely free. Daniel comes in, learns your operation, and gives you an honest read before anything else. Pricing for any follow-on work depends entirely on what's actually needed — which is why we diagnose first.",
+    ai: "ProvenLabs helps businesses understand where AI creates genuine operational value — and where it simply doesn't apply. We don't come in with a solution already picked. We learn your business first, then identify whether AI tools make sense and which ones would actually fit your workflow."
+  };
+
+  function matchIntent(q) {
+    q = q.toLowerCase();
+    if (/daniel|who are you|background|about you|intern/.test(q)) return KB.daniel;
+    if (/provenlabs|proven labs|what do you do|company/.test(q)) return KB.provenlabs;
+    if (/philosophy|approach|how.*(work|operate)|process|diagnos/.test(q)) return KB.process;
+    if (/real estate|brokerage|realtor|agent/.test(q)) return KB.realestate;
+    if (/law|legal|attorney|lawyer|firm/.test(q)) return KB.law;
+    if (/auto|car|repair|shop|dealership|mechanic/.test(q)) return KB.automotive;
+    if (/contractor|construction|builder|trade|plumb|hvac|roof/.test(q)) return KB.contractor;
+    if (/account|bookkeep|cpa|tax/.test(q)) return KB.accounting;
+    if (/contact|reach|email|call|schedule|book/.test(q)) return KB.contact;
+    if (/cost|price|pricing|fee|charge|free/.test(q)) return KB.cost;
+    if (/ai|artificial intelligence|automation|tech|software/.test(q)) return KB.ai;
+    return null;
+  }
+
+  const SMALL_AVATAR_SVG = `<span style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:linear-gradient(135deg,#1B6CC8,#1D9E75);color:white;font-size:13px;font-weight:700;font-family:Inter,sans-serif;border-radius:50%;">S</span>`;
+
+  function sendChat() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    const userRow = document.createElement('div');
+    userRow.className = 'chat-msg-row user';
+    const userMsg = document.createElement('div');
+    userMsg.className = 'chat-msg user';
+    userMsg.textContent = text;
+    userRow.appendChild(userMsg);
+    messages.appendChild(userRow);
+    messages.scrollTop = messages.scrollHeight;
+
+    const typingRow = document.createElement('div');
+    typingRow.className = 'chat-typing';
+    typingRow.innerHTML = `<div class="chat-msg-avatar">${SMALL_AVATAR_SVG}</div><div class="chat-typing-dots"><span></span><span></span><span></span></div>`;
+    messages.appendChild(typingRow);
+    messages.scrollTop = messages.scrollHeight;
+
+    setTimeout(() => {
+      messages.removeChild(typingRow);
+      const botRow = document.createElement('div');
+      botRow.className = 'chat-msg-row';
+      const botAvatar = document.createElement('div');
+      botAvatar.className = 'chat-msg-avatar';
+      botAvatar.innerHTML = SMALL_AVATAR_SVG;
+      const botMsg = document.createElement('div');
+      botMsg.className = 'chat-msg bot';
+      const answer = matchIntent(text);
+      if (answer) {
+        botMsg.textContent = answer;
+      } else {
+        botMsg.innerHTML = "That's a great one to bring to Daniel directly — he'd love to dig into it with you. Shoot him an email at <a href='mailto:daniel.bosack@provenlabs.ai'>daniel.bosack@provenlabs.ai</a> or grab some time using the Book a Call button on this page.";
+      }
+      botRow.appendChild(botAvatar);
+      botRow.appendChild(botMsg);
+      messages.appendChild(botRow);
+      messages.scrollTop = messages.scrollHeight;
+    }, 900);
+  }
+</script>
+
+</body>
+</html>
