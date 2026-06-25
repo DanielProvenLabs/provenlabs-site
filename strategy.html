@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Bosack — GTM Strategy · ProvenLabs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1117;
+    --navy-soft: #161B22;
+    --navy-border: #21262D;
+    --accent: #58A6FF;
+    --accent-dim: #1F3A5F;
+    --text-primary: #E6EDF3;
+    --text-secondary: #8B949E;
+    --text-muted: #484F58;
+    --surface: #161B22;
+    --surface-raised: #1C2128;
+    --border: #30363D;
+    --green: #3FB950;
+    --amber: #D29922;
+    --coral: #F78166;
+    --purple: #8957E5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--navy);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .nav-brand span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--text-primary);
+    background: var(--surface);
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  section:last-of-type { border-bottom: none; }
+
+  /* HERO */
+  #hero {
+    padding: 140px 0 96px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.65;
+    margin-bottom: 40px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-stat-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .hero-stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* PHASE HEADERS */
+  .phase-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .phase-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.15;
+  }
+
+  .section-intro {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.65;
+    margin-bottom: 56px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* INDUSTRY CARDS */
+  .industry-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .industry-item {
+    border: 1px solid var(--border);
+    border-radius: 0;
+    border-bottom: none;
+  }
+
+  .industry-item:first-child { border-radius: 12px 12px 0 0; }
+  .industry-item:last-child { border-radius: 0 0 12px 12px; border-bottom: 1px solid var(--border); }
+
+  .industry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    cursor: pointer;
+    background: var(--surface);
+    transition: background 0.15s;
+    gap: 16px;
+  }
+
+  .industry-header:hover { background: var(--surface-raised); }
+
+  .industry-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .industry-rank {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    min-width: 24px;
+  }
+
+  .industry-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .industry-market {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .industry-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .badge-personal { background: rgba(88,166,255,0.12); color: var(--accent); border: 1px solid rgba(88,166,255,0.2); }
+  .badge-data { background: rgba(63,185,80,0.1); color: var(--green); border: 1px solid rgba(63,185,80,0.2); }
+  .badge-priority-1 { background: rgba(248,81,73,0.1); color: #F85149; border: 1px solid rgba(248,81,73,0.2); }
+  .badge-priority-2 { background: rgba(210,153,34,0.1); color: var(--amber); border: 1px solid rgba(210,153,34,0.2); }
+  .badge-priority-3 { background: rgba(88,166,255,0.1); color: var(--accent); border: 1px solid rgba(88,166,255,0.2); }
+
+  .chevron {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+    user-select: none;
+  }
+
+  .industry-body {
+    display: none;
+    padding: 0 24px 24px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+
+  .industry-body.open { display: block; }
+
+  .industry-body-inner {
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+
+  .research-block-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--navy-border);
+    font-size: 13px;
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+  .stat-label { color: var(--text-secondary); }
+  .stat-value { color: var(--text-primary); font-weight: 500; font-family: 'Space Grotesk', sans-serif; }
+
+  .pain-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 5px 0 5px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--navy-border);
+    line-height: 1.5;
+  }
+
+  .pain-item:last-child { border-bottom: none; }
+
+  .pain-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--coral);
+    font-size: 11px;
+    top: 7px;
+  }
+
+  .why-box {
+    background: var(--accent-dim);
+    border: 1px solid rgba(88,166,255,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #A8C8F0;
+    line-height: 1.6;
+    grid-column: 1 / -1;
+  }
+
+  .why-box strong {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  /* TIME PLAN */
+  .time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .time-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+
+  .time-day {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .time-hours {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .time-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .time-blocked {
+    background: rgba(248,81,73,0.05);
+    border-color: rgba(248,81,73,0.2);
+  }
+
+  .time-blocked .time-hours { color: #F85149; }
+
+  .outreach-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .outreach-table th {
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .outreach-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--navy-border);
+    color: var(--text-secondary);
+  }
+
+  .outreach-table td:first-child { color: var(--text-primary); font-weight: 500; }
+  .outreach-table tr:last-child td { border-bottom: none; }
+
+  .outreach-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  /* GTM */
+  .priority-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .priority-item {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: start;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .priority-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-muted);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .priority-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .priority-reason {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .outreach-tactics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .tactic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .tactic-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .tactic-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .tactic-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .messaging-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+
+  .messaging-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .messaging-headline {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .messaging-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .disqualify-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .dq-card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .dq-good {
+    border: 1px solid rgba(63,185,80,0.25);
+  }
+
+  .dq-bad {
+    border: 1px solid rgba(248,81,73,0.2);
+  }
+
+  .dq-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .dq-good .dq-title { color: var(--green); }
+  .dq-bad .dq-title { color: #F85149; }
+
+  .dq-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 5px 0 5px 16px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--navy-border);
+  }
+
+  .dq-item:last-child { border-bottom: none; }
+  .dq-good .dq-item::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 11px; top: 6px; }
+  .dq-bad .dq-item::before { content: '✕'; position: absolute; left: 0; color: #F85149; font-size: 11px; top: 6px; }
+
+  /* AI SECTION */
+  .ai-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ai-phase {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .ai-phase-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .ai-phase-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .ai-phase-text strong {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* PRACTICE RUN */
+  .practice-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .practice-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+  }
+
+  .practice-status {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--amber);
+    margin-bottom: 10px;
+  }
+
+  .practice-text {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.65;
+  }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 96px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #0D1117;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-top: 24px;
+    transition: opacity 0.15s;
+  }
+
+  .cta-btn:hover { opacity: 0.85; }
+
+  .cta-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* DIVIDERS */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .highlight-quote {
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    margin: 32px 0;
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* CALENDAR */
+  .cal-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .cal-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .cal-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .cal-dot-provenlabs { background: var(--accent); }
+  .cal-dot-restaurant { background: var(--amber); }
+  .cal-dot-blocked { background: #F85149; }
+  .cal-dot-protected { background: var(--green); }
+  .cal-wrap {
+    display: grid;
+    grid-template-columns: 48px repeat(7, 1fr);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+    margin-bottom: 16px;
+  }
+  .cal-time-col, .cal-day-col { display: flex; flex-direction: column; }
+  .cal-time-header, .cal-day-header {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+    background: var(--navy-soft);
+  }
+  .cal-time-slot {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    font-size: 10px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--navy-border);
+    flex-shrink: 0;
+  }
+  .cal-slot {
+    height: 40px;
+    border-bottom: 1px solid var(--navy-border);
+    border-left: 1px solid var(--navy-border);
+    flex-shrink: 0;
+  }
+  .cal-day-col .cal-slot, .cal-day-col .cal-block, .cal-day-col .cal-day-header { border-left: 1px solid var(--navy-border); }
+  .cal-block {
+    border-left: 1px solid var(--navy-border);
+    border-bottom: 1px solid var(--navy-border);
+    border-radius: 4px;
+    margin: 2px 3px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .cal-span-1 { height: 36px; }
+  .cal-span-2 { height: 76px; }
+  .cal-span-3 { height: 116px; }
+  .cal-span-4 { height: 156px; }
+  .cal-span-5 { height: 196px; }
+  .cal-span-13 { height: 520px; }
+  .cal-block-provenlabs { background: rgba(88,166,255,0.12); border: 1px solid rgba(88,166,255,0.25); }
+  .cal-block-restaurant { background: rgba(210,153,34,0.1); border: 1px solid rgba(210,153,34,0.25); }
+  .cal-block-blocked { background: rgba(248,81,73,0.1); border: 1px solid rgba(248,81,73,0.25); }
+  .cal-block-protected { background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.2); height: 100%; border-radius: 0; margin: 0; justify-content: center; align-items: center; text-align: center; }
+  .cal-block-title { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 700; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cal-block-provenlabs .cal-block-title { color: var(--accent); }
+  .cal-block-restaurant .cal-block-title { color: var(--amber); }
+  .cal-block-blocked .cal-block-title { color: #F85149; }
+  .cal-block-protected .cal-block-title { color: var(--green); }
+  .cal-block-sub { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cal-total-strip { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 48px; }
+  .cal-total-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 16px 12px; gap: 4px; }
+  .cal-total-value { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-primary); }
+  .cal-total-label { font-size: 11px; color: var(--text-muted); text-align: center; }
+  .cal-total-divider { width: 1px; background: var(--border); margin: 12px 0; }
+  @media (max-width: 680px) {
+    .cal-wrap { grid-template-columns: 36px repeat(7, 1fr); }
+    .cal-block-sub { display: none; }
+    .cal-time-slot { font-size: 9px; padding-right: 4px; }
+    .cal-total-strip { flex-wrap: wrap; }
+    .cal-total-divider { display: none; }
+  }
+
+  .sources-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 16px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .sources-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+  }
+
+  .source-link {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--navy-border);
+    padding-bottom: 1px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .source-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .tactic-channel {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .channel-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .channel-primary { background: rgba(63,185,80,0.12); color: var(--green); border: 1px solid rgba(63,185,80,0.25); }
+  .channel-secondary { background: rgba(88,166,255,0.1); color: var(--accent); border: 1px solid rgba(88,166,255,0.2); }
+  .channel-followup { background: rgba(130,130,130,0.1); color: var(--text-muted); border: 1px solid rgba(130,130,130,0.2); }
+
+  .channel-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* GTM CRITERIA */
+  .gtm-criterion {
+    padding: 48px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gtm-criterion-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .gtm-criterion-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+
+  .gtm-criterion-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .hooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .hook-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+  }
+
+  .hook-industry {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hook-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .fit-industry-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .fit-industry-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+
+  .fit-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 580px) {
+    .fit-cols { grid-template-columns: 1fr; }
+    .hooks-grid { grid-template-columns: 1fr; }
+  }
+
+  .poc-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .poc-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+
+  .poc-value {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* RESEARCH EXPANDED LAYOUT */
+  .research-industry-block {
+    border-bottom: 1px solid var(--border);
+    padding: 48px 0;
+  }
+
+  .research-industry-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .research-industry-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .research-industry-num {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    min-width: 24px;
+  }
+
+  .research-five-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .research-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .research-cat-header {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .research-prose {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 680px) {
+    nav { padding: 0 16px; }
+    .nav-links { display: none; }
+    .container { padding: 0 16px; }
+    .two-col, .disqualify-grid { grid-template-columns: 1fr; }
+    section { padding: 64px 0; }
+    #hero { padding: 100px 0 64px; }
+    .industry-body-inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Daniel Bosack · <span>ProvenLabs</span></div>
+  <ul class="nav-links">
+    <li><a href="#phase1">Why These Five</a></li>
+    <li><a href="#phase2">Research</a></li>
+    <li><a href="#phase3">Time Plan</a></li>
+    <li><a href="#phase4">GTM</a></li>
+    <li><a href="#phase5">AI Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-eyebrow">ProvenLabs Internship · 2026 · GTM Strategy</div>
+    <h1 class="hero-title">My plan for<br>finding the right<br><em>five markets.</em></h1>
+    <p class="hero-sub">Five industries researched, ranked, and built an outreach plan around. Here's the strategy, the research, and exactly how I'll execute.</p>
+    <div class="hero-meta">
+      <div class="hero-stat">
+        <span class="hero-stat-value">5</span>
+        <span class="hero-stat-label">Target Industries</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">$3T+</span>
+        <span class="hero-stat-label">Combined Market</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">14–15</span>
+        <span class="hero-stat-label">Hrs / Week Target</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value">15–20</span>
+        <span class="hero-stat-label">New Contacts / Week</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 1: WHY THESE FIVE -->
+<section id="phase1">
+  <div class="container">
+    <div class="phase-label">Phase 1 — Selection</div>
+    <h2 class="section-title">Why these five industries.</h2>
+
+
+    <div class="card-grid">
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;">Friends in the industry</div>
+        <div class="card-title">🏗️ Contractors — Priority #1</div>
+        <div class="card-body">I have friends in contracting who talk about this regularly. The work gets done — the business side doesn't. Invoices don't go out on time, follow-ups fall through, and keeping it all straight becomes its own full-time job nobody signed up for. I've heard this enough times that I know exactly what to ask when I walk in the door.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;">Family in the industry</div>
+        <div class="card-title">🏠 Real estate — Priority #2</div>
+        <div class="card-body">I have family in real estate. What I've seen up close is the paperwork and compliance burden — contracts, disclosures, the NAR settlement adding more — combined with the scheduling chaos that comes with running an active book of clients. The systems aren't keeping up with the workload and I've watched that play out firsthand.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:10px;">Personal experience as a customer</div>
+        <div class="card-title">🔧 Auto repair — Priority #3</div>
+        <div class="card-body">I switched mechanics because I found a cheaper option. My original shop never called, never followed up, never gave me a reason to stay. No reminder, no check-in, nothing. I didn't leave because the work was bad — I left because they made it easy to leave. That's a retention problem I experienced directly, and it's fixable.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:10px;">Market data + career interest</div>
+        <div class="card-title">⚖️ Law firms — Priority #4</div>
+        <div class="card-body">No personal connection, but two honest reasons: the data is too strong to ignore — a $405B industry where 60% of firms never answer email and 7% actually use their CRM — and I've genuinely considered law as a career path, which means I've thought about how the profession works from the inside. That gives me more context than pure numbers alone.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:10px;">Friend in the profession</div>
+        <div class="card-title">📊 Accounting — Priority #5</div>
+        <div class="card-body">I have a friend who works in accounting. Her description of the job is blunt: a lot of repeatable, boring work. That's not a personal failing — it's a systems problem. The manual, repetitive work that fills her days is exactly what AI is built to eliminate, and 79% of firm owners already know it's coming. Almost none of them have a plan for it.</div>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<!-- PHASE 2: RESEARCH -->
+<section id="phase2">
+  <div class="container">
+    <div class="phase-label">Phase 2 — Research</div>
+    <h2 class="section-title">Five industries. Deep research.</h2>
+
+    <!-- CONTRACTORS -->
+    <div class="research-industry-block">
+      <div class="research-industry-header">
+        <div class="research-industry-title">
+          <span class="research-industry-num">01</span>
+          <span>🏗️ Contractors & construction</span>
+        </div>
+        <div class="industry-badges">
+          <span class="badge badge-personal">Observed gap</span>
+          <span class="badge badge-priority-1">Priority #1</span>
+        </div>
+      </div>
+      <div class="research-five-grid">
+        <div class="research-block">
+          <div class="research-cat-header">Industry profile</div>
+          <p class="research-prose">The largest of the five industries and the most operationally primitive. Construction is 4.4% of US GDP, employs 8.3 million people, and is dominated by small owner-operators who are tradespeople first and business owners second. Most contractors manage projects from memory, run quotes in their heads, and invoice late if at all. The gap between the quality of the work and the quality of the administration is enormous — and visible to anyone paying attention.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Market sizing</div>
+          <div class="stat-row"><span class="stat-label">Market size (2026)</span><span class="stat-value">$2.2 trillion</span></div>
+          <div class="stat-row"><span class="stat-label">% of US GDP</span><span class="stat-value">4.4%</span></div>
+          <div class="stat-row"><span class="stat-label">Employed</span><span class="stat-value">8.3M people</span></div>
+          <div class="stat-row"><span class="stat-label">Residential growth (2026)</span><span class="stat-value">+12%</span></div>
+          <div class="stat-row"><span class="stat-label">Non-residential growth</span><span class="stat-value">+8%</span></div>
+          <div class="stat-row"><span class="stat-label">Small operators</span><span class="stat-value">600,000+</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Software landscape</div>
+          <div class="stat-row"><span class="stat-label">Enterprise</span><span class="stat-value">Procore</span></div>
+          <div class="stat-row"><span class="stat-label">Residential / small</span><span class="stat-value">Buildertrend, JobTread ($199/mo)</span></div>
+          <div class="stat-row"><span class="stat-label">Field service</span><span class="stat-value">ServiceTitan</span></div>
+          <div class="stat-row"><span class="stat-label">Using beyond email</span><span class="stat-value">Only 18%</span></div>
+          <p class="research-prose" style="margin-top:12px;">73% report that multiple disconnected tools make data sharing harder — yet nearly three-quarters plan to increase software spending in 2026. They want solutions. They just haven't found ones that stick.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Pain map</div>
+          <div class="pain-item">Poor communication causes 52% of rework — $31.3B in annual waste</div>
+          <div class="pain-item">70% experience payment delays beyond 30 days</div>
+          <div class="pain-item">Only 18% use anything beyond email or spreadsheets</div>
+          <div class="pain-item">10–15% of revenue left uncollected annually</div>
+          <div class="pain-item">Labor crisis: industry needs 439,000 new workers in 2026 alone</div>
+          <div class="pain-item">Material cost pressure: input prices rose 6% annualized through mid-2026</div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">ICP definition</div>
+          <div class="pain-item">Owner-operator, 1–10 employees, residential or light commercial</div>
+          <div class="pain-item">Tradesperson first — business systems are an afterthought</div>
+          <div class="pain-item">Quoting and invoicing done in their head or not at all</div>
+          <div class="pain-item">Has been burned by software before — ROI must be immediate and obvious</div>
+          <div class="pain-item">Everything lives in the owner's head; nothing survives if they're unavailable</div>
+          <div class="poc-row"><span class="poc-label">Point of contact</span><span class="poc-value">The owner — there's no one else. If their name isn't on the business, you're talking to the wrong person.</span></div>
+        </div>
+      </div>
+      <div class="sources-row">
+        <span class="sources-label">Sources</span>
+        <a class="source-link" href="https://www.businesswire.com/news/home/20250521182315/en/Constructions-Cash-Crunch-70-of-Contractors-Say-Payment-Delays-Threaten-Industry" target="_blank">Business Wire — Payment delays, 70%</a>
+        <a class="source-link" href="https://www.deloitte.com/us/en/insights/industry/engineering-and-construction/engineering-and-construction-industry-outlook.html" target="_blank">Deloitte — Material prices & industry outlook</a>
+      </div>
+    </div>
+
+    <!-- REAL ESTATE -->
+    <div class="research-industry-block">
+      <div class="research-industry-header">
+        <div class="research-industry-title">
+          <span class="research-industry-num">02</span>
+          <span>🏠 Real estate agencies & brokerages</span>
+        </div>
+        <div class="industry-badges">
+          <span class="badge badge-personal">Personal connection</span>
+          <span class="badge badge-priority-2">Priority #2</span>
+        </div>
+      </div>
+      <div class="research-five-grid">
+        <div class="research-block">
+          <div class="research-cat-header">Industry profile</div>
+          <p class="research-prose">A fragmented, relationship-driven industry where the largest player holds only 9% market share. 81% of brokerage firms operate a single office. The NAR settlement in 2024 added new disclosure requirements and liability pressure, accelerating the shift toward flat-fee and rebate models. Existing home sales remain near 30-year lows as homeowners hold sub-4% mortgages — deals are harder to come by, making conversion and retention more critical than ever.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Market sizing</div>
+          <div class="stat-row"><span class="stat-label">Market size (2026)</span><span class="stat-value">$206B</span></div>
+          <div class="stat-row"><span class="stat-label">Projected (2031)</span><span class="stat-value">$281B</span></div>
+          <div class="stat-row"><span class="stat-label">CAGR</span><span class="stat-value">5.32%</span></div>
+          <div class="stat-row"><span class="stat-label">Residential revenue share</span><span class="stat-value">82.4%</span></div>
+          <div class="stat-row"><span class="stat-label">Small independent firms</span><span class="stat-value">240,000+</span></div>
+          <div class="stat-row"><span class="stat-label">Avg firm size</span><span class="stat-value">2 full-time licensees</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Software landscape</div>
+          <div class="stat-row"><span class="stat-label">Leading CRMs</span><span class="stat-value">Follow Up Boss, Wise Agent, Lofty, BoldTrail, CINC</span></div>
+          <div class="stat-row"><span class="stat-label">Largest player share</span><span class="stat-value">9% — highly fragmented</span></div>
+          <div class="stat-row"><span class="stat-label">Real bottleneck</span><span class="stat-value">Adoption, not availability</span></div>
+          <p class="research-prose" style="margin-top:12px;">The tools exist. The problem is that most agents set them up, get overwhelmed, and revert to text messages and sticky notes within 90 days. The software isn't the gap — the system around it is.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Pain map</div>
+          <div class="pain-item">48% of agents never follow up on leads after first contact</div>
+          <div class="pain-item">60% of buyers say no 4+ times before saying yes — no system to stay in it</div>
+          <div class="pain-item">70% of top earners get business from referrals — most have no referral system</div>
+          <div class="pain-item">Broker isolation — agents report as few as 10 broker conversations in 13 years</div>
+          <div class="pain-item">NAR settlement creating new liability exposure and compliance requirements</div>
+          <div class="pain-item">Tech overload is the real problem — too many tools, none connected</div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">ICP definition</div>
+          <div class="pain-item">Independent brokerage, 1–10 agents</div>
+          <div class="pain-item">Owner is also the top producer — pulled in every direction</div>
+          <div class="pain-item">Leads managed through texts, sticky notes, or memory</div>
+          <div class="pain-item">Has tried a CRM before, abandoned it within 90 days</div>
+          <div class="pain-item">Knows they're losing follow-up business but doesn't know where to start</div>
+          <div class="poc-row"><span class="poc-label">Point of contact</span><span class="poc-value">The broker-owner — agents have no budget authority, and the broker is the one feeling the revenue leak directly.</span></div>
+        </div>
+      </div>
+      <div class="sources-row">
+        <span class="sources-label">Sources</span>
+        <a class="source-link" href="https://www.ibisworld.com/united-states/industry/real-estate-sales-brokerage/1354/" target="_blank">IBISWorld — Industry profile</a>
+        <a class="source-link" href="https://www.mordorintelligence.com/industry-reports/us-real-estate-brokerage-market" target="_blank">Mordor Intelligence — Market size & projected value</a>
+        <a class="source-link" href="https://www.pinova.in/blog/why-70-percent-real-estate-leads-lost" target="_blank">Pinova — Follow-up statistics</a>
+      </div>
+    </div>
+
+    <!-- AUTO REPAIR -->
+    <div class="research-industry-block">
+      <div class="research-industry-header">
+        <div class="research-industry-title">
+          <span class="research-industry-num">03</span>
+          <span>🔧 Automotive repair shops</span>
+        </div>
+        <div class="industry-badges">
+          <span class="badge badge-personal">Personal experience</span>
+          <span class="badge badge-priority-2">Priority #3</span>
+        </div>
+      </div>
+      <div class="research-five-grid">
+        <div class="research-block">
+          <div class="research-cat-header">Industry profile</div>
+          <p class="research-prose">A highly fragmented industry where independent owner-operators generate the majority of revenue, but operate on legacy tools or nothing at all. The average US vehicle is now 12.8 years old — older vehicles mean more frequent repairs and higher ticket sizes, but shops aren't built to capitalize on retention. The trust gap is the defining characteristic: two-thirds of Americans don't trust their repair shop, which means the bar for winning loyalty is low if you simply show up reliably.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Market sizing</div>
+          <div class="stat-row"><span class="stat-label">Market size (2026)</span><span class="stat-value">$199B</span></div>
+          <div class="stat-row"><span class="stat-label">Projected (2031)</span><span class="stat-value">$281B</span></div>
+          <div class="stat-row"><span class="stat-label">CAGR</span><span class="stat-value">5.9%</span></div>
+          <div class="stat-row"><span class="stat-label">Total establishments</span><span class="stat-value">162,000</span></div>
+          <div class="stat-row"><span class="stat-label">Top 50 firms revenue share</span><span class="stat-value">&lt;10% — fragmented</span></div>
+          <div class="stat-row"><span class="stat-label">Average vehicle age</span><span class="stat-value">12.8 years</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Software landscape</div>
+          <div class="stat-row"><span class="stat-label">Best for independents</span><span class="stat-value">Tekmetric (cloud-based)</span></div>
+          <div class="stat-row"><span class="stat-label">Legacy tools</span><span class="stat-value">Mitchell 1, RO Writer, Shop-Ware, AutoLeap</span></div>
+          <div class="stat-row"><span class="stat-label">Dealership platforms</span><span class="stat-value">CDK Global, Reynolds & Reynolds</span></div>
+          <p class="research-prose" style="margin-top:12px;">Most independent shops are on tools they've had for years and never fully set up. Customer communication and retention features exist in the software — but are rarely configured or used.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Pain map</div>
+          <div class="pain-item">Two-thirds of Americans distrust auto repair shops — credibility gap hiding an opportunity</div>
+          <div class="pain-item">No structured system to bring customers back — retention is entirely reactive</div>
+          <div class="pain-item">Job cards lost, invoicing manual, vehicle history on paper or in memory</div>
+          <div class="pain-item">Missed billable work every day from broken tracking</div>
+          <div class="pain-item">46% of owners say technician shortage is significantly impacting operations</div>
+          <div class="pain-item">46% cite rising parts prices and sourcing as a top challenge</div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">ICP definition</div>
+          <div class="pain-item">Independent owner-operator, 2–6 bays</div>
+          <div class="pain-item">Running on paper or a system they set up years ago and never maintained</div>
+          <div class="pain-item">Has lost customers they never knew they lost</div>
+          <div class="pain-item">Owner is often also the head mechanic — time is the most scarce resource</div>
+          <div class="pain-item">Would benefit immediately from structured follow-up and service reminders</div>
+          <div class="poc-row"><span class="poc-label">Point of contact</span><span class="poc-value">The shop owner — independent shops have no middle management, and the owner is the one losing sleep over retention.</span></div>
+        </div>
+      </div>
+      <div class="sources-row">
+        <span class="sources-label">Sources</span>
+        <a class="source-link" href="https://partstech.com/resource/blog/2025-partstech-report-state-of-general-auto-repair-shops-in-the-u-s/" target="_blank">PartsTech — Technician shortage & customer service</a>
+        <a class="source-link" href="https://www.mordorintelligence.com/industry-reports/united-states-automotive-service-market" target="_blank">Mordor Intelligence — Market size & value</a>
+      </div>
+    </div>
+
+    <!-- LAW FIRMS -->
+    <div class="research-industry-block">
+      <div class="research-industry-header">
+        <div class="research-industry-title">
+          <span class="research-industry-num">04</span>
+          <span>⚖️ Law firms</span>
+        </div>
+        <div class="industry-badges">
+          <span class="badge badge-data">Data-driven</span>
+          <span class="badge badge-priority-3">Priority #4</span>
+        </div>
+      </div>
+      <div class="research-five-grid">
+        <div class="research-block">
+          <div class="research-cat-header">Industry profile</div>
+          <p class="research-prose">The legal industry is one of the most resistant to change — and one of the most operationally broken at the small firm level. Ethics and confidentiality concerns create real friction around technology adoption. The small firm segment (2–10 attorneys) is the fastest-growing portion of the market and the most underserved by modern tooling. Most of their pain is not legal — it's administrative.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Market sizing</div>
+          <div class="stat-row"><span class="stat-label">Market size (2026)</span><span class="stat-value">$405.3B</span></div>
+          <div class="stat-row"><span class="stat-label">Small firm segment share</span><span class="stat-value">34.2%</span></div>
+          <div class="stat-row"><span class="stat-label">Small firm CAGR</span><span class="stat-value">5.9% — fastest growing</span></div>
+          <div class="stat-row"><span class="stat-label">Target firm count</span><span class="stat-value">150,000–200,000</span></div>
+          <div class="stat-row"><span class="stat-label">Lost revenue / attorney / yr</span><span class="stat-value">$129,600</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Software landscape</div>
+          <div class="stat-row"><span class="stat-label">Market leader</span><span class="stat-value">Clio (150,000+ users)</span></div>
+          <div class="stat-row"><span class="stat-label">Others</span><span class="stat-value">MyCase, PracticePanther, Lawmatics, Smokeball</span></div>
+          <div class="stat-row"><span class="stat-label">CRM ownership</span><span class="stat-value">78% have one</span></div>
+          <div class="stat-row"><span class="stat-label">CRM actual usage</span><span class="stat-value">7%</span></div>
+          <div class="stat-row"><span class="stat-label">AI adoption (2026)</span><span class="stat-value">26% (up from 14% in 2024)</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Pain map</div>
+          <div class="pain-item">60% of firms never respond to email inquiries</div>
+          <div class="pain-item">27% don't return phone calls — leads die at first contact</div>
+          <div class="pain-item">45% of small firm time spent on non-billable admin work</div>
+          <div class="pain-item">Billing leakage: firms collect only 89–90% of what they bill</div>
+          <div class="pain-item">Ethics and confidentiality concerns slow every technology conversation</div>
+          <div class="pain-item">Lawyers lose 40% of working time to manual processes outside their practice</div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">ICP definition</div>
+          <div class="pain-item">Solo to 5-attorney firm — family law, personal injury, or criminal defense</div>
+          <div class="pain-item">Owner-operator who is also the primary rainmaker</div>
+          <div class="pain-item">Intake is still phone tag and manual data entry</div>
+          <div class="pain-item">Ethics-conscious — trust must come before any technology conversation</div>
+          <div class="pain-item">Has software they paid for but don't use</div>
+          <div class="poc-row"><span class="poc-label">Point of contact</span><span class="poc-value">The managing partner — in small firms this is almost always the founder, the only person with both the pain and the authority to act on it.</span></div>
+        </div>
+      </div>
+      <div class="sources-row">
+        <span class="sources-label">Sources</span>
+        <a class="source-link" href="https://www.clio.com/resources/legal-trends/2025-solo-small-firm-report/" target="_blank">Clio — 2025 Legal Trends for Solo & Small Law Firms Report</a>
+        <a class="source-link" href="https://abovethebarmarketing.com/how-ai-is-changing-the-billable-hours-and-work-life-balance-equation-for-law-firms/" target="_blank">Above the Bar — Billable hours & admin burden</a>
+        <a class="source-link" href="https://poconoai.com/legal-admin-burden.html" target="_blank">Pocono AI — Lost billable hour statistics</a>
+      </div>
+    </div>
+
+    <!-- ACCOUNTING -->
+    <div class="research-industry-block" style="border-bottom:none;">
+      <div class="research-industry-header">
+        <div class="research-industry-title">
+          <span class="research-industry-num">05</span>
+          <span>📊 Accounting & bookkeeping firms</span>
+        </div>
+        <div class="industry-badges">
+          <span class="badge badge-data">Data-driven</span>
+          <span class="badge badge-priority-3">Priority #5</span>
+        </div>
+      </div>
+      <div class="research-five-grid">
+        <div class="research-block">
+          <div class="research-cat-header">Industry profile</div>
+          <p class="research-prose">A profession on the edge of a structural shift. The compliance-focused model that defined accounting for decades is being squeezed by automation — and the firms winning right now are the ones moving into advisory. But advisory knowledge lives in senior practitioners' heads and can't scale without systems. Meanwhile, the average firm runs 8 disconnected apps and feels overwhelmed weekly. The AI opportunity here is enormous, and almost entirely untapped at the small firm level.</p>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Market sizing</div>
+          <div class="stat-row"><span class="stat-label">Market size (2026)</span><span class="stat-value">$145.5B</span></div>
+          <div class="stat-row"><span class="stat-label">AI accounting market</span><span class="stat-value">$10.87B</span></div>
+          <div class="stat-row"><span class="stat-label">AI segment CAGR</span><span class="stat-value">44.6%</span></div>
+          <div class="stat-row"><span class="stat-label">Total firms</span><span class="stat-value">886,000</span></div>
+          <div class="stat-row"><span class="stat-label">Avg apps per firm</span><span class="stat-value">8 disconnected tools</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Software landscape</div>
+          <div class="stat-row"><span class="stat-label">Dominant platform</span><span class="stat-value">QuickBooks</span></div>
+          <div class="stat-row"><span class="stat-label">Others</span><span class="stat-value">Xero, FreshBooks, Karbon, Financial Cents</span></div>
+          <div class="stat-row"><span class="stat-label">AI-native tools</span><span class="stat-value">Botkeeper, Dext</span></div>
+          <div class="stat-row"><span class="stat-label">Integration difficulty</span><span class="stat-value">41% cite as major issue</span></div>
+          <div class="stat-row"><span class="stat-label">Subscription cost concern</span><span class="stat-value">44%</span></div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">Pain map</div>
+          <div class="pain-item">79% expect AI to have transformational impact — only 14% have a strategy</div>
+          <div class="pain-item">Two-thirds feel overwhelmed by technology complexity at least weekly</div>
+          <div class="pain-item">Growth is entirely word-of-mouth — no outbound, no marketing</div>
+          <div class="pain-item">Advisory knowledge lives in senior heads and can't scale</div>
+          <div class="pain-item">Aging CPA population retiring, fewer entering the profession</div>
+          <div class="pain-item">AI adoption barriers: privacy risk (41%), staff experience (39%), data quality (38%)</div>
+        </div>
+        <div class="research-block">
+          <div class="research-cat-header">ICP definition</div>
+          <div class="pain-item">Small CPA firm, 1–5 staff, primarily compliance-focused</div>
+          <div class="pain-item">Wants to move toward advisory but doesn't have a roadmap</div>
+          <div class="pain-item">Running 6–8 apps that don't talk to each other</div>
+          <div class="pain-item">Privacy-conscious — AI conversations must begin with trust, not features</div>
+          <div class="pain-item">No formal marketing — all growth is referral or nothing</div>
+          <div class="poc-row"><span class="poc-label">Point of contact</span><span class="poc-value">The firm owner or managing partner — they're the one drowning in the eight-app problem and the only one who can approve a change.</span></div>
+        </div>
+      </div>
+      <div class="sources-row">
+        <span class="sources-label">Sources</span>
+        <a class="source-link" href="https://www.firmofthefuture.com/news/accountant-tech-survey-2025/" target="_blank">Intuit QuickBooks — Tech survey, too many tools</a>
+        <a class="source-link" href="https://www.wolterskluwer.com/en/news/wolters-kluwer-releases-its-2025-future-ready-accountant-report" target="_blank">Wolters Kluwer — Future Ready Accountant Report 2025</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHASE 3: TIME MANAGEMENT -->
+<section id="phase3">
+  <div class="container">
+    <div class="phase-label">Phase 3 — Time Management</div>
+    <h2 class="section-title">When this actually gets worked on.</h2>
+    <p class="section-intro">A real plan around real constraints. Restaurant schedule arrives Friday/Saturday each week — that's the planning trigger. ProvenLabs blocks get set first. Everything else fills the gaps.</p>
+
+    <!-- CALENDAR LEGEND -->
+    <div class="cal-legend">
+      <div class="cal-legend-item"><span class="cal-dot cal-dot-provenlabs"></span>ProvenLabs work</div>
+      <div class="cal-legend-item"><span class="cal-dot cal-dot-restaurant"></span>Restaurant shift</div>
+      <div class="cal-legend-item"><span class="cal-dot cal-dot-blocked"></span>Hard block</div>
+      <div class="cal-legend-item"><span class="cal-dot cal-dot-protected"></span>Protected time</div>
+    </div>
+
+    <!-- CALENDAR GRID -->
+    <div class="cal-wrap">
+      <!-- TIME LABELS -->
+      <div class="cal-time-col">
+        <div class="cal-time-header"></div>
+        <div class="cal-time-slot">8 AM</div>
+        <div class="cal-time-slot">9 AM</div>
+        <div class="cal-time-slot">10 AM</div>
+        <div class="cal-time-slot">11 AM</div>
+        <div class="cal-time-slot">12 PM</div>
+        <div class="cal-time-slot">1 PM</div>
+        <div class="cal-time-slot">2 PM</div>
+        <div class="cal-time-slot">3 PM</div>
+        <div class="cal-time-slot">4 PM</div>
+        <div class="cal-time-slot">5 PM</div>
+        <div class="cal-time-slot">6 PM</div>
+        <div class="cal-time-slot">7 PM</div>
+        <div class="cal-time-slot">8 PM</div>
+      </div>
+
+      <!-- MON -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Mon</div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-3">
+          <div class="cal-block-title">ProvenLabs</div>
+          <div class="cal-block-sub">Deep work / outreach</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+      </div>
+
+      <!-- TUE -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Tue</div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-3">
+          <div class="cal-block-title">ProvenLabs</div>
+          <div class="cal-block-sub">Deep work / outreach</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+      </div>
+
+      <!-- WED -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Wed</div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-2">
+          <div class="cal-block-title">ProvenLabs</div>
+          <div class="cal-block-sub">Morning only</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-blocked cal-span-3">
+          <div class="cal-block-title">Mandatory Meeting</div>
+          <div class="cal-block-sub">Hard block — 6–9 PM</div>
+        </div>
+      </div>
+
+      <!-- THU -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Thu</div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-4">
+          <div class="cal-block-title">ProvenLabs</div>
+          <div class="cal-block-sub">Strongest block — research & outreach</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+      </div>
+
+      <!-- FRI -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Fri</div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-2">
+          <div class="cal-block-title">ProvenLabs</div>
+          <div class="cal-block-sub">Weekly planning + schedule arrives</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-restaurant cal-span-4">
+          <div class="cal-block-title">Restaurant</div>
+          <div class="cal-block-sub">Typical evening shift</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+      </div>
+
+      <!-- SAT -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Sat</div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-provenlabs cal-span-1">
+          <div class="cal-block-title">Admin only</div>
+          <div class="cal-block-sub">1 hr max</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-block cal-block-restaurant cal-span-5">
+          <div class="cal-block-title">Restaurant</div>
+          <div class="cal-block-sub">Likely shift</div>
+        </div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+        <div class="cal-slot"></div>
+      </div>
+
+      <!-- SUN -->
+      <div class="cal-day-col">
+        <div class="cal-day-header">Sun</div>
+        <div class="cal-block cal-block-protected cal-span-13">
+          <div class="cal-block-title">Family Day</div>
+          <div class="cal-block-sub">Protected — no ProvenLabs work</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEKLY TOTAL STRIP -->
+    <div class="cal-total-strip">
+      <div class="cal-total-item">
+        <span class="cal-total-value">14–15 hrs</span>
+        <span class="cal-total-label">Week 1 target</span>
+      </div>
+      <div class="cal-total-divider"></div>
+      <div class="cal-total-item">
+        <span class="cal-total-value">Mon / Thu</span>
+        <span class="cal-total-label">Strongest focus days</span>
+      </div>
+      <div class="cal-total-divider"></div>
+      <div class="cal-total-item">
+        <span class="cal-total-value">~22 hrs</span>
+        <span class="cal-total-label">Restaurant shifts / week</span>
+      </div>
+      <div class="cal-total-divider"></div>
+      <div class="cal-total-item">
+        <span class="cal-total-value">Fri / Sat</span>
+        <span class="cal-total-label">Schedule arrives → next week planned</span>
+      </div>
+    </div>
+
+    <div class="two-col" style="margin-top:48px;">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:20px;">Outreach cadence</div>
+        <table class="outreach-table">
+          <thead>
+            <tr>
+              <th>Activity</th>
+              <th>Weekly target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>New outreach contacts</td>
+              <td><span class="outreach-num">15–20</span></td>
+            </tr>
+            <tr>
+              <td>Follow-ups on prior contacts</td>
+              <td><span class="outreach-num">10–15</span></td>
+            </tr>
+            <tr>
+              <td>Messaging refinement session</td>
+              <td><span class="outreach-num">1</span></td>
+            </tr>
+            <tr>
+              <td>Prospect research</td>
+              <td><span style="font-size:13px;color:var(--text-secondary);">Ongoing, built into blocks</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:20px;">Non-negotiables</div>
+        <div class="card" style="margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F85149;margin-bottom:8px;">Hard blocks</div>
+          <div class="pain-item" style="font-size:13px;">Wednesday 6–9pm — mandatory meeting, no exceptions</div>
+          <div class="pain-item" style="font-size:13px;">Sunday — family day, protected</div>
+          <div class="pain-item" style="font-size:13px;">Restaurant shifts (~22 hrs/week) — fixed once schedule arrives</div>
+        </div>
+        <div class="card">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--amber);margin-bottom:8px;">Flexible around ProvenLabs</div>
+          <div class="pain-item" style="font-size:13px;">Workouts — scheduled around work blocks, not instead of them</div>
+          <div class="pain-item" style="font-size:13px;">Second job — fills gaps, never overrides core ProvenLabs blocks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHASE 4: GTM -->
+<section id="phase4">
+  <div class="container">
+    <div class="phase-label">Phase 4 — Go-to-Market</div>
+    <h2 class="section-title">Outreach Tactics.</h2>
+
+    <!-- CRITERION 1: OUTREACH TACTICS -->
+    <div class="gtm-criterion">
+      <div class="gtm-criterion-header">
+        <span class="gtm-criterion-num">01</span>
+        <span class="gtm-criterion-title">Outreach tactics</span>
+      </div>
+      <div class="hooks-grid">
+
+        <div class="hook-card">
+          <div class="hook-industry">🏗️ Contractors</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="tactic-channel"><span class="channel-badge channel-primary">In person</span><span class="channel-desc">Show up at a job site or their shop in the morning before the day gets away from them. Best entry by far — these owners are never at a desk.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-secondary">Phone call</span><span class="channel-desc">Direct call to the business number. Short, no pitch — just asking for 15 minutes. Second best to showing up in person.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-followup">Email</span><span class="channel-desc">Follow-up only — never a cold opener. Use it to send a recap or confirm a next step after a real conversation.</span></div>
+          </div>
+        </div>
+
+        <div class="hook-card">
+          <div class="hook-industry">🏠 Real estate</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="tactic-channel"><span class="channel-badge channel-primary">Warm intro</span><span class="channel-desc">One person vouching for you through family connections is worth 50 cold emails. Start here before anything else.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-secondary">Phone call</span><span class="channel-desc">Brokers are on their phones constantly. A direct call to the office works better than most expect — they're used to fielding calls.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-followup">LinkedIn</span><span class="channel-desc">Works well for follow-up after a call. Not a cold opener — use it to stay visible after the first touch.</span></div>
+          </div>
+        </div>
+
+        <div class="hook-card">
+          <div class="hook-industry">🔧 Automotive repair</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="tactic-channel"><span class="channel-badge channel-primary">In person</span><span class="channel-desc">Walk in mid-morning after the rush — not first thing, not at lunch. Shop owners are on the floor, not checking email. Easiest in-person approach of the five.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-secondary">Phone call</span><span class="channel-desc">Call the shop directly if you can't get there in person. Keep it short and make it about them — ask what's slowing them down, not what you're selling.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-followup">Email</span><span class="channel-desc">Follow-up only. Useful for sending a summary after a conversation, not for cold outreach.</span></div>
+          </div>
+        </div>
+
+        <div class="hook-card">
+          <div class="hook-industry">⚖️ Law firms</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="tactic-channel"><span class="channel-badge channel-primary">Email</span><span class="channel-desc">A short, well-written email referencing a specific pain point gets read. Cold calls get screened by the receptionist — email bypasses that.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-secondary">Phone call</span><span class="channel-desc">Follow up with a call after the email — reference it directly. Don't cold call blind; warm the line first.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-followup">LinkedIn</span><span class="channel-desc">Works especially well with younger attorneys. Use it in parallel with email to stay on their radar.</span></div>
+          </div>
+        </div>
+
+        <div class="hook-card">
+          <div class="hook-industry">📊 Accounting</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="tactic-channel"><span class="channel-badge channel-primary">Email</span><span class="channel-desc">A thoughtful email referencing tax season overwhelm or the too-many-tools problem will outperform a cold call. Desk-based buyers read their inbox.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-secondary">LinkedIn</span><span class="channel-desc">Firm owners are more active here than attorneys tend to be. Strong for both cold outreach and follow-up — personalize every message.</span></div>
+            <div class="tactic-channel"><span class="channel-badge channel-followup">Phone call</span><span class="channel-desc">Only after email or LinkedIn has warmed the line. These buyers are time-protective — a cold call without context rarely lands.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CRITERION 2: MESSAGING / VALUE PROPOSITION -->
+    <div class="gtm-criterion">
+      <div class="gtm-criterion-header">
+        <span class="gtm-criterion-num">02</span>
+        <span class="gtm-criterion-title">Messaging & value proposition</span>
+      </div>
+
+      <div class="messaging-box" style="margin-bottom:24px;">
+        <div class="messaging-label">General opener — all industries</div>
+        <div class="messaging-body" style="margin-bottom:14px;">ProvenLabs leads with diagnosis before prescription because recommending a solution before understanding the problem is how bad consultants operate. A business owner who feels heard — not sold to — is more likely to tell you the truth about what's actually broken, which is the only way to build something that actually works for them. The goal of the first conversation is never to close. It's to earn the right to come back with a real recommendation.</div>
+        <div class="messaging-headline">"I'm not here to sell you anything on this call. I want to understand your operation — then I'll tell you honestly what I think would help, and what I think is a waste of your time."</div>
+        <div class="messaging-body">That's the opener because it's true and because it disarms. Most business owners have been pitched at so many times that honesty is the differentiator.</div>
+      </div>
+
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:16px;">Industry-specific hooks</div>
+      <div class="hooks-grid">
+        <div class="hook-card">
+          <div class="hook-industry">🏗️ Contractors</div>
+          <div class="hook-body">"Most small contractors I talk to are great at the work but drowning in the business side of it — I'm not sure if this sounds familiar, but 70% of contractors experience payment delays beyond 30 days and only 18% are using anything beyond email or spreadsheets. What I do is come in, learn your operation, and build you a system that gets you paid faster and keeps jobs from falling through the cracks — and whatever else we find once I'm actually in the room with you."</div>
+        </div>
+        <div class="hook-card">
+          <div class="hook-industry">🏠 Real estate</div>
+          <div class="hook-body">"A lot of brokers I speak with feel like they're working hard but losing deals they should have closed — I'm not sure if this sounds familiar, but 48% of agents never follow up after first contact and 60% of buyers say no four times before they say yes. What I do is diagnose exactly where your follow-up is breaking down and put a system in place that keeps you in front of leads automatically — along with anything else that's quietly costing you money."</div>
+        </div>
+        <div class="hook-card">
+          <div class="hook-industry">🔧 Automotive repair</div>
+          <div class="hook-body">"Most shop owners I talk to know they have regulars who just stopped coming in, but have no real way to know why — I'm not sure if this sounds familiar, but two-thirds of Americans say they don't trust their repair shop and most shops have no system to bring customers back. What I do is build a retention and follow-up system that keeps your existing customers coming back — and take a look at what else in your operation could be running cleaner."</div>
+        </div>
+        <div class="hook-card">
+          <div class="hook-industry">⚖️ Law firms</div>
+          <div class="hook-body">"A lot of small firm attorneys I speak with are spending half their day on things that have nothing to do with practicing law — I'm not sure if this sounds familiar, but 45% of small firm time goes to non-billable admin, adding up to over $100,000 in lost revenue per attorney per year. What I do is identify where that time is going and build intake and workflow systems that give it back to you — and surface whatever else is slowing the practice down."</div>
+        </div>
+        <div class="hook-card">
+          <div class="hook-industry">📊 Accounting</div>
+          <div class="hook-body">"Most firm owners I talk to feel like they're constantly reacting — too many tools, not enough time, growth entirely dependent on word of mouth — I'm not sure if this sounds familiar, but the average accounting firm runs eight disconnected apps and two-thirds feel overwhelmed by technology at least weekly. What I do is simplify the stack and build systems that free you up to focus on advisory work — and figure out what else is getting in the way of growing the firm."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITERION 3: PRIORITIZATION -->
+    <div class="gtm-criterion">
+      <div class="gtm-criterion-header">
+        <span class="gtm-criterion-num">03</span>
+        <span class="gtm-criterion-title">How I'm prioritizing the five industries</span>
+      </div>
+      <div class="priority-list">
+        <div class="priority-item">
+          <div class="priority-num">1</div>
+          <div>
+            <div class="priority-name">🏗️ Contractors</div>
+            <div class="priority-reason">The gap between the quality of the work and the quality of the admin is enormous — and I've seen it firsthand. These owners make decisions fast, the pain is obvious, and only 18% are using anything beyond email or spreadsheets. That's the widest open door of the five.</div>
+          </div>
+          <span class="badge badge-priority-1">Lead</span>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">2</div>
+          <div>
+            <div class="priority-name">🏠 Real estate</div>
+            <div class="priority-reason">Family in the industry gives me a warm network to start from and credibility in the first conversation. Independent brokerage owners make decisions quickly and the follow-up problem is one I already understand before walking in.</div>
+          </div>
+          <span class="badge badge-priority-2">Warm network</span>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">3</div>
+          <div>
+            <div class="priority-name">🔧 Automotive repair</div>
+            <div class="priority-reason">Personal experience as a customer makes the opener authentic. The trust gap is real — two-thirds of Americans don't trust their shop — and the fix is operational, not technical. That's a conversation I can start without needing to lead with AI or software.</div>
+          </div>
+          <span class="badge badge-priority-2">Personal entry</span>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">4</div>
+          <div>
+            <div class="priority-name">⚖️ Law firms</div>
+            <div class="priority-reason">The data is strong — $405B industry, 60% never answer email, 7% actually use their CRM. But trust takes longer to build here. Ethics and confidentiality concerns mean the first conversation needs to be careful, not fast. Building toward this after traction elsewhere.</div>
+          </div>
+          <span class="badge badge-priority-3">Build toward</span>
+        </div>
+        <div class="priority-item">
+          <div class="priority-num">5</div>
+          <div>
+            <div class="priority-name">📊 Accounting</div>
+            <div class="priority-reason">Strongest data case but longest runway. Privacy concerns, tech overwhelm, and a compliance-first culture mean the sales cycle is slower. The AI opportunity is massive — 79% expect transformation, 14% have a plan — but this is a later-stage play once the model is proven elsewhere.</div>
+          </div>
+          <span class="badge badge-priority-3">Later stage</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITERION 4: FIT CRITERIA PER INDUSTRY -->
+    <div class="gtm-criterion" style="border-bottom:none;padding-bottom:0;">
+      <div class="gtm-criterion-header">
+        <span class="gtm-criterion-num">04</span>
+        <span class="gtm-criterion-title">How I'll determine fit — by industry</span>
+      </div>
+
+      <div class="fit-industry-grid">
+
+        <div class="fit-block">
+          <div class="fit-industry-name">🏗️ Contractors</div>
+          <div class="fit-cols">
+            <div class="dq-card dq-good">
+              <div class="dq-title">Good fit</div>
+              <div class="dq-item">Owner answers the phone themselves</div>
+              <div class="dq-item">3+ active jobs but no real tracking system</div>
+              <div class="dq-item">Has complained about late payments or chasing clients for money</div>
+            </div>
+            <div class="dq-card dq-bad">
+              <div class="dq-title">Move on</div>
+              <div class="dq-item">Works primarily as a subcontractor with no direct client relationships</div>
+              <div class="dq-item">Husband-and-wife operation with no employees and no plans to grow</div>
+              <div class="dq-item">Locked into a franchise system with mandatory software</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fit-block">
+          <div class="fit-industry-name">🏠 Real estate</div>
+          <div class="fit-cols">
+            <div class="dq-card dq-good">
+              <div class="dq-title">Good fit</div>
+              <div class="dq-item">Broker is also producing — they feel the follow-up problem personally</div>
+              <div class="dq-item">At least 3 agents under them but no systems tying the team together</div>
+              <div class="dq-item">Has tried a CRM before and can say exactly why it didn't stick</div>
+            </div>
+            <div class="dq-card dq-bad">
+              <div class="dq-title">Move on</div>
+              <div class="dq-item">Solo agent with no team and no plans to build one</div>
+              <div class="dq-item">Part of a large national franchise with centralized tech mandated</div>
+              <div class="dq-item">Just got their license — no existing client base to systematize</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fit-block">
+          <div class="fit-industry-name">🔧 Automotive repair</div>
+          <div class="fit-cols">
+            <div class="dq-card dq-good">
+              <div class="dq-title">Good fit</div>
+              <div class="dq-item">Independent shop, not part of a chain</div>
+              <div class="dq-item">Open at least 3 years — enough history to have a retention problem worth solving</div>
+              <div class="dq-item">Owner knows regulars by name but has no database to back it up</div>
+            </div>
+            <div class="dq-card dq-bad">
+              <div class="dq-title">Move on</div>
+              <div class="dq-item">Franchise location — corporate dictates the systems</div>
+              <div class="dq-item">At capacity with a waitlist — no urgency to improve retention</div>
+              <div class="dq-item">Owner is planning to sell or retire within 12 months</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fit-block">
+          <div class="fit-industry-name">⚖️ Law firms</div>
+          <div class="fit-cols">
+            <div class="dq-card dq-good">
+              <div class="dq-title">Good fit</div>
+              <div class="dq-item">Solo to 5-attorney firm in personal injury, family law, or criminal defense</div>
+              <div class="dq-item">Intake still happening over the phone with manual follow-up</div>
+              <div class="dq-item">Too busy to take on more clients despite wanting to grow</div>
+            </div>
+            <div class="dq-card dq-bad">
+              <div class="dq-title">Move on</div>
+              <div class="dq-item">Large firm with a dedicated IT or operations team already in place</div>
+              <div class="dq-item">Full caseload, pure referrals, no growth ambition</div>
+              <div class="dq-item">Immediately defensive about confidentiality before anything technical is mentioned</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fit-block">
+          <div class="fit-industry-name">📊 Accounting</div>
+          <div class="fit-cols">
+            <div class="dq-card dq-good">
+              <div class="dq-title">Good fit</div>
+              <div class="dq-item">Overwhelmed during tax season, slow the rest of the year — uneven workload is a systems problem</div>
+              <div class="dq-item">Clients asking for advisory help but no capacity to deliver it</div>
+              <div class="dq-item">Growth has flatlined and they can't explain why</div>
+            </div>
+            <div class="dq-card dq-bad">
+              <div class="dq-title">Move on</div>
+              <div class="dq-item">Just implemented new software in the last 6 months — change fatigue</div>
+              <div class="dq-item">Owner within 2 years of retirement with no succession plan</div>
+              <div class="dq-item">Purely transactional bookkeeping with no interest in moving up the value chain</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHASE 5: AI PROCESS + PRACTICE RUN -->
+<section id="phase5">
+  <div class="container">
+    <div class="phase-label">Phase 5 — Assets & Process</div>
+    <h2 class="section-title">How I used AI to build this.</h2>
+    <p class="section-intro">Claude was my analyst, copywriter, researcher, and sparring partner at every phase. Here's exactly how — not a vague claim, but a specific accounting of the work.</p>
+
+    <div class="ai-thread" style="margin-bottom:64px;">
+      <div class="ai-phase">
+        <span class="ai-phase-label">Research</span>
+        <div class="ai-phase-text">Used Claude to run industry profiles, pain maps, ICP definitions, market sizing, and software landscape analyses for all five industries. <strong>I directed the research and challenged the output</strong> — pushed back on vague statistics, asked for verification, and separated what was confirmed from what was estimated.</div>
+      </div>
+      <div class="ai-phase">
+        <span class="ai-phase-label">Prioritization</span>
+        <div class="ai-phase-text">Used Claude as a sparring partner to stress-test my prioritization logic. <strong>It pushed back on "good upside" as a reason</strong> — and it was right. That challenge forced me to separate personal-connection picks from data-driven ones, which made the plan more honest.</div>
+      </div>
+      <div class="ai-phase">
+        <span class="ai-phase-label">Messaging</span>
+        <div class="ai-phase-text">Drafted and iterated the value proposition and industry-specific hooks with Claude. <strong>Went through multiple rounds</strong> — the first drafts were generic. The current version came from pushing past the obvious framing and asking "what does this owner actually need to hear?"</div>
+      </div>
+      <div class="ai-phase">
+        <span class="ai-phase-label">Design & build</span>
+        <div class="ai-phase-text">This site was built with Claude. <strong>Claude interviewed me before writing a line of code</strong> — the architecture, the phase structure, and the content all came from that conversation. The design choices were deliberate, not defaults.</div>
+      </div>
+      <div class="ai-phase">
+        <span class="ai-phase-label">Honesty check</span>
+        <div class="ai-phase-text">Claude flagged where my reasoning was thin — specifically on law firms and accounting, where "good upside" was not a real reason. <strong>I took the feedback and said so explicitly in the plan</strong> rather than papering over it. That's on the site because it's true.</div>
+      </div>
+    </div>
+
+    <div style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:20px;">Practice run</div>
+    <div class="practice-box">
+      <div class="practice-icon">🎯</div>
+      <div class="practice-status">In progress — scheduled</div>
+      <div class="practice-text">The practice run — a conversation with a business owner or executive for honest feedback on the messaging — is the next step. Not trying to sell anyone, just testing how the diagnosis-first opener lands in a real conversation with someone who has authority and a real operation to talk about. Feedback from that conversation will be documented here.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <div class="phase-label" style="justify-content:center;">Get in touch</div>
+    <h2 class="section-title" style="text-align:center;">The first conversation is a diagnosis, not a pitch.</h2>
+    <p style="font-size:16px;color:var(--text-secondary);max-width:480px;margin:0 auto;line-height:1.65;text-align:center;">If you run one of these five types of businesses, I'd like to understand your operation — then tell you honestly what I think would help.</p>
+    <a class="cta-btn" href="https://calendly.com/daniel-bosack-provenlabs/30min">Book a meeting</a>
+    <div class="cta-sub">or email daniel.bosack@provenlabs.ai</div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    Daniel Bosack · ProvenLabs · daniel.bosack@provenlabs.ai · GTM Strategy 2026
+  </div>
+</footer>
+
+
+
+</body>
+</html>
