@@ -1789,43 +1789,191 @@
       </div>
     </div>
 
-    <!-- CRITERION 2: MESSAGING / VALUE PROPOSITION -->
+    <!-- CRITERION 2: FIRST CONTACT SCRIPTS -->
     <div class="gtm-criterion">
       <div class="gtm-criterion-header">
         <span class="gtm-criterion-num">02</span>
-        <span class="gtm-criterion-title">Messaging & value proposition</span>
+        <span class="gtm-criterion-title">Cold call, walk-in &amp; email scripts</span>
       </div>
 
-      <div class="messaging-box" style="margin-bottom:24px;">
-        <div class="messaging-label">General opener — all industries</div>
-        <div class="messaging-body" style="margin-bottom:14px;">ProvenLabs leads with diagnosis before prescription because recommending a solution before understanding the problem is how bad consultants operate. A business owner who feels heard — not sold to — is more likely to tell you the truth about what's actually broken, which is the only way to build something that actually works for them. The goal of the first conversation is never to close. It's to earn the right to come back with a real recommendation.</div>
-        <div class="messaging-headline">"I'm not here to sell you anything on this call. I want to understand your operation — then I'll tell you honestly what I think would help, and what I think is a waste of your time."</div>
-        <div class="messaging-body">That's the opener because it's true and because it disarms. Most business owners have been pitched at so many times that honesty is the differentiator.</div>
+      <style>
+        .scripts-wrap { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        .scripts-rules { background: var(--surface-raised); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1.5rem; }
+        .scripts-rules h2 { font-size: 12px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #3FB950; margin-bottom: 0.75rem; }
+        .scripts-rule-item { display: flex; gap: 10px; font-size: 13px; color: var(--text-secondary); padding: 0.35rem 0; border-bottom: 1px solid var(--navy-border); }
+        .scripts-rule-item:last-child { border-bottom: none; }
+        .scripts-rule-item strong { color: var(--text-primary); font-weight: 600; }
+        .scripts-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .scripts-tab { padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-family: inherit; }
+        .scripts-tab:hover { border-color: #3FB950; color: #3FB950; }
+        .scripts-tab.active { background: rgba(63,185,80,0.1); border-color: rgba(63,185,80,0.3); color: #3FB950; font-weight: 600; }
+        .scripts-phase { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+        .scripts-phase-head { display: flex; align-items: center; gap: 12px; padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border); }
+        .scripts-phase-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(63,185,80,0.1); color: #3FB950; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .scripts-phase-label { font-size: 14px; font-weight: 600; color: var(--text-primary); flex: 1; }
+        .scripts-phase-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: rgba(63,185,80,0.1); color: #3FB950; white-space: nowrap; border: 1px solid rgba(63,185,80,0.2); }
+        .scripts-phase-body { padding: 1.1rem 1.25rem; }
+        .scripts-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); margin: 0.85rem 0 0.35rem; }
+        .scripts-eyebrow:first-child { margin-top: 0; }
+        .scripts-script { background: rgba(63,185,80,0.07); border-left: 3px solid #3FB950; border-radius: 0 8px 8px 0; padding: 0.85rem 1rem; font-size: 14px; line-height: 1.7; color: var(--text-primary); font-style: italic; margin-bottom: 0.5rem; }
+        .scripts-note { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--text-secondary); margin-top: 0.5rem; padding: 0.5rem 0.75rem; background: var(--navy-soft); border-radius: 6px; }
+        .scripts-note-icon { color: #3FB950; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+        .scripts-hook-panel { display: none; }
+        .scripts-hook-panel.active { display: block; }
+        .scripts-question-list { list-style: none; }
+        .scripts-question-list li { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid var(--navy-border); font-size: 14px; color: var(--text-primary); }
+        .scripts-question-list li:last-child { border-bottom: none; }
+        .scripts-question-list li::before { content: "→"; color: #3FB950; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+      </style>
+
+      <div class="scripts-wrap">
+        <div class="scripts-rules">
+          <h2>Non-negotiables on every call</h2>
+          <div class="scripts-rule-item"><strong>Lead with a question.</strong> You're there to understand their operation, not pitch yours.</div>
+          <div class="scripts-rule-item"><strong>Don't go too fast.</strong> Silence is fine. Let them fill it.</div>
+          <div class="scripts-rule-item"><strong>Never get off without a next step.</strong> A specific day and time, not "let's keep in touch."</div>
+          <div class="scripts-rule-item"><strong>Humanize the close.</strong> "Earn your time, not take it."</div>
+          <div class="scripts-rule-item"><strong>The goal of call 1 is call 2.</strong> You're not closing anything today.</div>
+        </div>
+
+        <div class="scripts-tabs" id="scriptsTabs">
+          <button class="scripts-tab active" data-ind="s-contractor">🏗 Contractor</button>
+          <button class="scripts-tab" data-ind="s-realestate">🏠 Real estate</button>
+          <button class="scripts-tab" data-ind="s-auto">🔧 Auto repair</button>
+          <button class="scripts-tab" data-ind="s-law">⚖️ Law firm</button>
+          <button class="scripts-tab" data-ind="s-accounting">📊 Accounting</button>
+        </div>
+
+        <div class="scripts-phase">
+          <div class="scripts-phase-head">
+            <div class="scripts-phase-num">1</div>
+            <div class="scripts-phase-label">Open — earn the next 60 seconds</div>
+            <div class="scripts-phase-tag">First words</div>
+          </div>
+          <div class="scripts-phase-body">
+            <div class="scripts-eyebrow">Cold call or in person</div>
+            <div class="scripts-script">"Hey [name], my name's Daniel — I work with a company called ProvenLabs. I'm not calling to pitch you anything — I just want to ask you one question about how your business operates, and if it sounds familiar, it might be worth a 20-minute conversation. Do you have 60 seconds?"</div>
+            <div class="scripts-note"><span class="scripts-note-icon">↑</span>The ask is tiny on purpose — 60 seconds, not a meeting. Lower bar means fewer hang-ups. You're earning permission to keep talking, nothing more.</div>
+            <div class="scripts-eyebrow">Email subject line</div>
+            <div class="scripts-script">"Quick question about [their business name]"</div>
+            <div class="scripts-note"><span class="scripts-note-icon">↑</span>Not "partnership opportunity" or "AI for your business." Curiosity and specificity beat clever every time.</div>
+          </div>
+        </div>
+
+        <div class="scripts-phase">
+          <div class="scripts-phase-head">
+            <div class="scripts-phase-num">2</div>
+            <div class="scripts-phase-label">The hook — make it about them</div>
+            <div class="scripts-phase-tag">Industry-specific</div>
+          </div>
+          <div class="scripts-phase-body">
+
+            <div id="s-contractor" class="scripts-hook-panel active">
+              <div class="scripts-eyebrow">Contractor hook</div>
+              <div class="scripts-script">"Most contractors I talk to are incredibly good at the actual work — but the business side: invoicing, following up on payments, keeping jobs from falling through the cracks — that stuff becomes its own full-time job nobody signed up for. Does that sound like anything you're dealing with?"</div>
+              <div class="scripts-note"><span class="scripts-note-icon">↑</span>70% of contractors experience payment delays past 30 days, and only 18% use anything beyond email or spreadsheets. You don't need to say those numbers — the question lands because it's true.</div>
+              <div class="scripts-eyebrow">If they say yes — keep pulling</div>
+              <div class="scripts-script">"Walk me through a typical job — from quote to getting paid. Where does it slow down for you?"</div>
+            </div>
+
+            <div id="s-realestate" class="scripts-hook-panel">
+              <div class="scripts-eyebrow">Real estate hook</div>
+              <div class="scripts-script">"A lot of broker-owners I speak with feel like they're working harder than ever but still losing deals they should have closed — leads go cold, follow-ups fall through, and the CRM they set up is either broken or abandoned. Does that ring a bell at all?"</div>
+              <div class="scripts-note"><span class="scripts-note-icon">↑</span>48% of agents never follow up after first contact. 60% of buyers say no four or more times before saying yes. The gap is enormous and they feel it — you're just naming it.</div>
+              <div class="scripts-eyebrow">If they say yes — keep pulling</div>
+              <div class="scripts-script">"What does your follow-up system actually look like right now — like, what happens the day after you meet a new lead?"</div>
+            </div>
+
+            <div id="s-auto" class="scripts-hook-panel">
+              <div class="scripts-eyebrow">Auto repair hook</div>
+              <div class="scripts-script">"Most shop owners I talk to can name their regulars off the top of their head — but have no real system to know when one of them stops coming in, or why. Customers drift away and the shop never finds out until it's too late. Is that something you've run into?"</div>
+              <div class="scripts-note"><span class="scripts-note-icon">↑</span>Two-thirds of Americans say they don't trust their repair shop — loyalty is almost entirely built on relationship, not brand. If a shop isn't maintaining that relationship actively, they're losing to whoever does.</div>
+              <div class="scripts-eyebrow">If they say yes — keep pulling</div>
+              <div class="scripts-script">"When was the last time you reached out to a customer just to check in — not because they had a problem, just to stay on their radar?"</div>
+            </div>
+
+            <div id="s-law" class="scripts-hook-panel">
+              <div class="scripts-eyebrow">Law firm hook</div>
+              <div class="scripts-script">"A lot of small firm attorneys I speak with are spending nearly half their day on things that have nothing to do with actually practicing law — intake, scheduling, follow-up, admin. The billable work suffers because the business side keeps taking over. Does that sound familiar at all?"</div>
+              <div class="scripts-note"><span class="scripts-note-icon">↑</span>45% of small firm time goes to non-billable admin — that's over $100,000 per attorney per year in lost revenue. Lead with the operational pain, not AI. Trust must come before any technology conversation here.</div>
+              <div class="scripts-eyebrow">If they say yes — keep pulling</div>
+              <div class="scripts-script">"What does your intake process look like when a new client calls? Walk me through exactly what happens."</div>
+            </div>
+
+            <div id="s-accounting" class="scripts-hook-panel">
+              <div class="scripts-eyebrow">Accounting hook</div>
+              <div class="scripts-script">"Most firm owners I talk to are running six, seven, eight different tools that don't really talk to each other — and then busy season hits, and it feels like you're drowning in the same repetitive work instead of doing the advisory stuff that actually grows the business. Is that close to what you're experiencing?"</div>
+              <div class="scripts-note"><span class="scripts-note-icon">↑</span>The average accounting firm runs 8 disconnected apps. 79% expect AI to transform the industry — only 14% have a plan. Lead with the tool chaos and the repetitive workload, not AI.</div>
+              <div class="scripts-eyebrow">If they say yes — keep pulling</div>
+              <div class="scripts-script">"What's the work that takes the most time during tax season that you wish you could just hand off?"</div>
+            </div>
+
+            <div class="scripts-note" style="margin-top:0.75rem;"><span class="scripts-note-icon">↑</span>Always end the hook with a question. You want them talking. If they push back, you've got a real conversation — that's better than a yes.</div>
+          </div>
+        </div>
+
+        <div class="scripts-phase">
+          <div class="scripts-phase-head">
+            <div class="scripts-phase-num">3</div>
+            <div class="scripts-phase-label">Why ProvenLabs — the honest answer</div>
+            <div class="scripts-phase-tag">Credibility</div>
+          </div>
+          <div class="scripts-phase-body">
+            <div class="scripts-script">"What ProvenLabs does — and the reason I'm talking to you specifically — is we come in, learn how your operation actually runs, and figure out where time and money are being lost. Then we build systems that fix it. We don't show up with a product to sell — we show up with questions. The recommendation comes after I understand your business, not before."</div>
+            <div class="scripts-note"><span class="scripts-note-icon">↑</span>This is your answer to "why you over anyone else." Diagnosis before prescription. Most consultants and software reps lead with features — you lead with curiosity. That's the real differentiator.</div>
+          </div>
+        </div>
+
+        <div class="scripts-phase">
+          <div class="scripts-phase-head">
+            <div class="scripts-phase-num">4</div>
+            <div class="scripts-phase-label">Listen — don't rush past this</div>
+            <div class="scripts-phase-tag">The real work</div>
+          </div>
+          <div class="scripts-phase-body">
+            <div class="scripts-eyebrow">Questions to keep the conversation going</div>
+            <ul class="scripts-question-list">
+              <li>"Walk me through what a typical week looks like for you."</li>
+              <li>"What's the part of the job that takes the most time that probably shouldn't?"</li>
+              <li>"If you could fix one thing about how the business runs, what would it be?"</li>
+              <li>"Have you tried fixing that before? What happened?"</li>
+              <li>"What does that cost you — in time, in money, in stress?"</li>
+            </ul>
+            <div class="scripts-note" style="margin-top:0.75rem;"><span class="scripts-note-icon">↑</span>Do not skip this phase. The problems they name here are what you bring back in your follow-up. This is how you earn the right to come back with a real recommendation.</div>
+          </div>
+        </div>
+
+        <div class="scripts-phase">
+          <div class="scripts-phase-head">
+            <div class="scripts-phase-num">5</div>
+            <div class="scripts-phase-label">Close — lock in the next step</div>
+            <div class="scripts-phase-tag">Never skip this</div>
+          </div>
+          <div class="scripts-phase-body">
+            <div class="scripts-eyebrow">The ask</div>
+            <div class="scripts-script">"Here's what I'd love to do — not a sales call, not a pitch. Just sit down with you for 20 minutes, let me ask you some questions about how things actually run, and I'll give you an honest read on what I think is worth fixing and what isn't. If it's not useful, I'll tell you that too. Would [specific day] or [specific day] work for something like that?"</div>
+            <div class="scripts-note"><span class="scripts-note-icon">↑</span>Offer two specific days — not "whenever works for you." Specificity signals confidence and makes it easy to say yes.</div>
+            <div class="scripts-eyebrow">If they hesitate</div>
+            <div class="scripts-script">"No pressure at all — I get it. Would it be okay if I followed up in a week or so? I'd rather earn your time than take it."</div>
+            <div class="scripts-note"><span class="scripts-note-icon">↑</span>"Earn your time" is the right framing — it matches everything you said about diagnosis first, and it keeps the door open without being pushy.</div>
+          </div>
+        </div>
       </div>
 
-      <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:16px;">Industry-specific hooks</div>
-      <div class="hooks-grid">
-        <div class="hook-card">
-          <div class="hook-industry">🏗️ Contractors</div>
-          <div class="hook-body">"Most small contractors I talk to are great at the work but drowning in the business side of it — I'm not sure if this sounds familiar, but 70% of contractors experience payment delays beyond 30 days and only 18% are using anything beyond email or spreadsheets. What I do is come in, learn your operation, and build you a system that gets you paid faster and keeps jobs from falling through the cracks — and whatever else we find once I'm actually in the room with you."</div>
-        </div>
-        <div class="hook-card">
-          <div class="hook-industry">🏠 Real estate</div>
-          <div class="hook-body">"A lot of brokers I speak with feel like they're working hard but losing deals they should have closed — I'm not sure if this sounds familiar, but 48% of agents never follow up after first contact and 60% of buyers say no four times before they say yes. What I do is diagnose exactly where your follow-up is breaking down and put a system in place that keeps you in front of leads automatically — along with anything else that's quietly costing you money."</div>
-        </div>
-        <div class="hook-card">
-          <div class="hook-industry">🔧 Automotive repair</div>
-          <div class="hook-body">"Most shop owners I talk to know they have regulars who just stopped coming in, but have no real way to know why — I'm not sure if this sounds familiar, but two-thirds of Americans say they don't trust their repair shop and most shops have no system to bring customers back. What I do is build a retention and follow-up system that keeps your existing customers coming back — and take a look at what else in your operation could be running cleaner."</div>
-        </div>
-        <div class="hook-card">
-          <div class="hook-industry">⚖️ Law firms</div>
-          <div class="hook-body">"A lot of small firm attorneys I speak with are spending half their day on things that have nothing to do with practicing law — I'm not sure if this sounds familiar, but 45% of small firm time goes to non-billable admin, adding up to over $100,000 in lost revenue per attorney per year. What I do is identify where that time is going and build intake and workflow systems that give it back to you — and surface whatever else is slowing the practice down."</div>
-        </div>
-        <div class="hook-card">
-          <div class="hook-industry">📊 Accounting</div>
-          <div class="hook-body">"Most firm owners I talk to feel like they're constantly reacting — too many tools, not enough time, growth entirely dependent on word of mouth — I'm not sure if this sounds familiar, but the average accounting firm runs eight disconnected apps and two-thirds feel overwhelmed by technology at least weekly. What I do is simplify the stack and build systems that free you up to focus on advisory work — and figure out what else is getting in the way of growing the firm."</div>
-        </div>
-      </div>
+      <script>
+        (function() {
+          var tabs = document.querySelectorAll('#scriptsTabs .scripts-tab');
+          var panels = document.querySelectorAll('.scripts-hook-panel');
+          tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+              tabs.forEach(function(t) { t.classList.remove('active'); });
+              tab.classList.add('active');
+              panels.forEach(function(p) { p.classList.remove('active'); });
+              document.getElementById(tab.dataset.ind).classList.add('active');
+            });
+          });
+        })();
+      </script>
     </div>
 
     <!-- CRITERION 3: PRIORITIZATION -->
